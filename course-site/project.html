@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Project · Student Version · ECTE471</title><meta name="description" content="Project-led classroom: move from the assembly brief to frames, kinematics, motion and an integrated demonstration."><link rel="stylesheet" href="assets/project.css?v=20261103"><script defer src="assets/quiz-math.js"></script><script defer src="assets/project-source.js?v=20261103"></script><script defer src="assets/project.js?v=20261103"></script><link rel="stylesheet" href="assets/classroom-ink.css?v=20261103"><script defer src="assets/classroom-ink.js?v=20261103"></script></head>
+<body>
+<header><a href="../index.html">← Course hub</a><b>ECTE471 · Project Classroom</b><div><button id="spec-open">Full specification</button><a href="quiz.html">Quiz ↗</a></div></header>
+<main>
+  <div class="page-heading"><div><p id="phase" class="eyebrow">CLIENT BRIEF</p><h1 id="stage-title">Design a robotic assembly cell</h1></div><button id="map-open">Course map</button></div>
+  <nav id="stages" aria-label="Project learning steps"></nav>
+  <div class="workspace">
+    <section class="visual panel"><div class="panel-head"><h2 id="visual-title">The assembly task</h2><button id="figure-open">Enlarge</button></div><img id="project-image" alt="Mobile vehicle assembly reference"><p id="figure-caption" class="caption"></p><div id="visual-extra"></div><div id="fixed-data" class="data-strip"></div></section>
+    <section class="task panel"><p class="eyebrow">ENGINEERING DECISION</p><h2 id="decision"></h2><ul id="tasks"></ul><aside class="whatif"><b>What if…</b><p id="whatif"></p></aside><button id="evidence-toggle" aria-expanded="false">What evidence is needed?</button><div id="evidence" hidden></div></section>
+    <aside class="learning panel"><p class="eyebrow">OPEN THE KNOWLEDGE YOU NEED</p><div id="lesson-links"></div><div id="demo-links"></div><button id="requirements-open" class="source-button">Read this stage in the specification</button></aside>
+  </div>
+  <footer><button id="prev">← Previous step</button><span id="review"></span><button id="next">Next step →</button></footer>
+  <p class="provenance">Professor Zengxi (Stephen) Pan · Project-led classroom prototype</p>
+</main>
+<dialog id="lesson-dialog" aria-labelledby="lesson-title"><div class="dialog-head"><div><p class="eyebrow" id="lesson-number"></p><h2 id="lesson-title"></h2></div><button data-close="lesson-dialog">Close ×</button></div><div id="lesson-body"></div></dialog>
+<dialog id="spec-dialog" class="large-dialog" aria-labelledby="spec-title"><div class="dialog-head"><h2 id="spec-title">Project Specification</h2><button data-close="spec-dialog">Close ×</button></div><p id="source-info" class="caption"></p><div id="spec-body"></div></dialog>
+<dialog id="figure-dialog" class="large-dialog" aria-label="Project reference figure"><div class="dialog-head"><h2 id="large-figure-title">Reference figure</h2><button data-close="figure-dialog">Close ×</button></div><img id="large-figure" alt="Enlarged original reference figure"></dialog>
+<dialog id="map-dialog" aria-labelledby="map-title"><div class="dialog-head"><h2 id="map-title">Project → knowledge → evidence</h2><button data-close="map-dialog">Close ×</button></div><div id="course-map"></div><p class="caption">These are classroom routes through the existing lectures, not a new timetable. L9 is optional; choose one advanced challenge.</p></dialog>
+</body></html>

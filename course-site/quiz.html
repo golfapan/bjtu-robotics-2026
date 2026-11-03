@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Interactive classroom Quiz: robot frames, transformations, Jacobians and motion.">
+  <title>Quiz · Student Version · ECTE471</title>
+  <link rel="stylesheet" href="assets/quiz.css?v=20261103-student">
+  <script defer src="assets/quiz-math.js?v=20261102"></script>
+  <script defer src="assets/quiz-test0.js?v=20261103-student4"></script>
+  <script defer src="assets/quiz-rotation.js?v=20261103-student"></script>
+  <script defer src="assets/quiz.js?v=20261103-student-origins"></script>
+<link rel="stylesheet" href="assets/classroom-ink.css?v=20261103"><script defer src="assets/classroom-ink.js?v=20261103"></script></head>
+<body>
+  <header class="topbar"><a href="../index.html">← Course hub</a><span>ECTE471 <b>Quiz</b></span><button id="fullscreen" type="button">Full screen</button></header>
+  <main>
+    <div class="heading"><div><p class="eyebrow" id="counter">QUESTION 01 / 03</p><h1 id="title">Fixed-axis and moving-axis rotations</h1></div><p class="instruction">Predict → change one value → explain what changed.</p></div>
+    <nav id="questions" aria-label="Quiz questions"></nav>
+    <section id="rotation-comparison" hidden aria-label="Fixed and moving rotation comparison"></section>
+    <section id="frame-workbench" hidden aria-label="DH frame-placement workbench"></section>
+    <section id="readt-classroom" hidden aria-label="Read T classroom demonstration">
+      <div id="readt-visual" class="readt-card"></div>
+      <div id="readt-matrix" class="readt-card"></div>
+      <div id="readt-controls" class="readt-card"></div>
+    </section>
+    <section id="readt-discussion" class="question-panel" aria-label="Questions and explanation" hidden></section>
+    <div class="workspace">
+      <section class="experiment" aria-labelledby="scene-title"><div class="panel-head"><h2 id="scene-title">Interactive view</h2><span id="scene-tag"></span></div><div id="scene"></div><div id="readout" aria-live="polite" aria-atomic="true"></div><div id="controls" aria-label="Experiment controls"></div></section>
+      <section class="question-panel" aria-label="Question and explanation"><div id="math"></div><div id="test0-given" hidden></div><div class="prompts"><h2>Decide & explain</h2><ol id="prompts" type="A"></ol></div><aside class="whatif"><b>What if…</b><p id="whatif"></p></aside><details id="explanation" hidden><summary></summary><div id="answer"></div></details></section>
+    </div>
+    <footer><button id="prev" type="button">← Previous</button><span>Professor Zengxi (Stephen) Pan · Robotics and Flexible Automation</span><div><button id="reset" type="button">Reset question</button> <button id="next" type="button">Next →</button></div></footer>
+  </main>
+  <noscript>This interactive Quiz needs JavaScript enabled. The original Quiz PowerPoint is unchanged.</noscript>
+</body>
+</html>
