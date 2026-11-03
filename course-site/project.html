@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Project · Student Version · ECTE471</title><meta name="description" content="Project-led classroom: move from the assembly brief to frames, kinematics, motion and an integrated demonstration."><link rel="stylesheet" href="assets/project.css?v=20261103"><script defer src="assets/quiz-math.js"></script><script defer src="assets/project-source.js?v=20261103"></script><script defer src="assets/project.js?v=20261103"></script><link rel="stylesheet" href="assets/classroom-ink.css?v=20261103"><script defer src="assets/classroom-ink.js?v=20261103"></script></head>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Project · Student Version · ECTE471</title><meta name="description" content="Project-led classroom: move from the assembly brief to frames, kinematics, motion and an integrated demonstration."><link rel="stylesheet" href="assets/project.css?v=20261103-spec-first"><script defer src="assets/quiz-math.js"></script><script defer src="assets/project-source.js?v=20261103"></script><script defer src="assets/project-reach.js?v=20261103-reach"></script><script defer src="assets/project.js?v=20261103-spec-first"></script><link rel="stylesheet" href="assets/classroom-ink.css?v=20261103"><script defer src="assets/classroom-ink.js?v=20261103"></script></head>
 <body>
 <header><a href="../index.html">← Course hub</a><b>ECTE471 · Project Classroom</b><div><button id="spec-open">Full specification</button><a href="quiz.html">Quiz ↗</a></div></header>
 <main>
@@ -7,11 +7,41 @@
   <nav id="stages" aria-label="Project learning steps"></nav>
   <div class="workspace">
     <section class="visual panel"><div class="panel-head"><h2 id="visual-title">The assembly task</h2><button id="figure-open">Enlarge</button></div><img id="project-image" alt="Mobile vehicle assembly reference"><p id="figure-caption" class="caption"></p><div id="visual-extra"></div><div id="fixed-data" class="data-strip"></div></section>
-    <section class="task panel"><p class="eyebrow">ENGINEERING DECISION</p><h2 id="decision"></h2><ul id="tasks"></ul><aside class="whatif"><b>What if…</b><p id="whatif"></p></aside><button id="evidence-toggle" aria-expanded="false">What evidence is needed?</button><div id="evidence" hidden></div></section>
-    <aside class="learning panel"><p class="eyebrow">OPEN THE KNOWLEDGE YOU NEED</p><div id="lesson-links"></div><div id="demo-links"></div><button id="requirements-open" class="source-button">Read this stage in the specification</button></aside>
+    <section class="task panel"><p class="eyebrow">PROJECT REQUIREMENTS</p><p id="stage-source" class="stage-source"></p><h2 id="decision"></h2><div id="challenge-selector"></div><ol id="tasks"></ol><h3 class="submission-title">This step · output / review</h3><button id="evidence-toggle" aria-expanded="false">What evidence is needed?</button><div id="evidence" hidden></div></section>
+
   </div>
+  <section id="brief-admin" class="brief-admin panel" aria-labelledby="brief-admin-title" hidden>
+    <div class="brief-admin-head"><div><p class="eyebrow">PROJECT ORGANISATION</p><h2 id="brief-admin-title">Team, assessment and submissions</h2></div><strong class="brief-total">100 marks</strong></div>
+    <div class="brief-admin-grid">
+      <div class="brief-team">
+        <h3>Form your engineering team</h3>
+        <ul><li><strong>4–6 students</strong>; choose a team/company name.</li><li>Nominate a coordinator. Share design, modelling, simulation, programming and communication responsibilities.</li><li>Every member must understand the complete system.</li><li><strong>No more than three teams per robot manufacturer.</strong></li></ul>
+        <h3>Final submission</h3>
+        <ol><li><strong>Team-written report</strong>: design, modelling, validation and integrated results. Include a contribution statement and AI Use Declaration.</li><li><strong>Runnable files</strong>: upload MATLAB/Python scripts and relevant simulation/program files before presenting.</li><li><strong>Presentation and demonstration</strong>: approximately 15 minutes, then 3–5 minutes of questions. Three to six members may present; all members must be ready to answer.</li></ol>
+      </div>
+      <div class="brief-assessment">
+        <h3>Assessment and review milestones</h3>
+        <div class="brief-table-scroll"><table class="brief-mark-table"><caption>Project mark allocation</caption><thead><tr><th scope="col">Assessment</th><th scope="col">Marks</th><th scope="col">Bring / submit</th></tr></thead><tbody>
+          <tr><th scope="row">EOI<small>End of Class 2 / after Lecture 2</small></th><td>5</td><td><strong>1 slide</strong>: team, workcell concept, selected robot and suitability.</td></tr>
+          <tr><th scope="row">PDR<small>End of Class 3 / after Lecture 3</small></th><td>10</td><td><strong>2–3 slides</strong>: joint numbering, frames, DH table, one transform and arm equation.</td></tr>
+          <tr><th scope="row">FDR<small>End of Class 5 / after Lecture 5</small></th><td>10</td><td><strong>2–3 slides</strong>: software model, target/configuration checks, trajectories and one issue or correction.</td></tr>
+          <tr><th scope="row">Final Engineering Report</th><td>35</td><td>Technical analysis, design decisions, verification and limitations.</td></tr>
+          <tr><th scope="row">Final Presentation &amp; Demonstration</th><td>40</td><td>Explain, demonstrate and defend the integrated system.</td></tr>
+          <tr class="brief-sum"><th scope="row">Total</th><td><strong>100</strong></td><td>Reviews 25 + report 35 + presentation 40.</td></tr>
+        </tbody></table></div>
+        <p class="brief-review-note"><strong>EOI, PDR and FDR are team discussions with the lecturer</strong>, not formal class presentations. Bring the summary slides when ready. The outcome may be approved, approved with comments, or revise and resubmit.</p>
+        <p class="brief-challenge-note"><strong>Choose one advanced challenge.</strong> Its 10 marks are already included: 5 in the report and 5 in the presentation/demonstration.</p>
+        <details class="brief-rubric"><summary>Detailed marking criteria</summary>
+          <h4>Report · 35 marks</h4><ul><li>System concept, robot/end-effector and workcell <strong>(5)</strong></li><li>Pose representation, kinematics and validation <strong>(8)</strong></li><li>Trajectory, Jacobian, programming and integration <strong>(10)</strong></li><li>Engineering justification and report quality <strong>(7)</strong></li><li>Selected advanced challenge <strong>(5)</strong></li></ul>
+          <h4>Presentation &amp; demonstration · 40 marks</h4><ul><li>Structure and audience-focused narrative <strong>(10)</strong></li><li>Delivery, visuals and time management <strong>(10)</strong></li><li>Explanation of the integrated demonstration <strong>(10)</strong>, including 5 for communicating the advanced challenge</li><li>Q&amp;A and coordinated team response <strong>(10)</strong></li></ul>
+        </details>
+      </div>
+    </div>
+  </section>
+  <section id="brief-resources" class="panel" aria-label="Knowledge needed"><div id="brief-resource-content">    <aside class="learning panel"><h2>Knowledge needed</h2><div id="lesson-links"></div><button id="requirements-open" class="source-button">Read this stage in the specification</button></aside></div></section>
+  <details id="demonstrations" class="panel"><summary>Explore · demonstrations and Quiz</summary><div id="demo-content"><section id="brief-reach-panel" aria-label="Position and tool orientation experiment" hidden></section><div id="demo-links"></div><details class="whatif"><summary>What if…</summary><p id="whatif"></p></details></div></details>
   <footer><button id="prev">← Previous step</button><span id="review"></span><button id="next">Next step →</button></footer>
-  <p class="provenance">Professor Zengxi (Stephen) Pan · Project-led classroom prototype</p>
+  <p class="provenance">Professor Zengxi (Stephen) Pan · Tasks from the Project Specification; demonstrations support understanding.</p>
 </main>
 <dialog id="lesson-dialog" aria-labelledby="lesson-title"><div class="dialog-head"><div><p class="eyebrow" id="lesson-number"></p><h2 id="lesson-title"></h2></div><button data-close="lesson-dialog">Close ×</button></div><div id="lesson-body"></div></dialog>
 <dialog id="spec-dialog" class="large-dialog" aria-labelledby="spec-title"><div class="dialog-head"><h2 id="spec-title">Project Specification</h2><button data-close="spec-dialog">Close ×</button></div><p id="source-info" class="caption"></p><div id="spec-body"></div></dialog>

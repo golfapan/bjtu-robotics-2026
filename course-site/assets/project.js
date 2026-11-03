@@ -6,22 +6,352 @@
   const contentPath='../Content/';
   const lectureFiles=['Introduction','3D Representation','DH Modelling','Inverse Kinematics','Trajectory Planning','ABB RAPID Programming','Jacobian Force and Compliance','Machine Vision and Calibration','Robot Path Planning','Lean Automation'];
   const ppt=n=>contentPath+encodeURIComponent(`Lecture ${String(n).padStart(2,'0')} ${lectureFiles[n-1]}.pdf`);
-  const quiz=(n,label)=>({href:'quiz.html',label:'Quiz · frames, DH and Jacobian'});
+  const quiz=(n,label)=>({href:`quiz.html#q${n}`,label});
   const product='assets/project-f2.png',workcell='assets/project-f3.png',process='assets/project-f4.png';
   const stages=[
-    {tab:'Start · Brief',phase:'CLIENT BRIEF',title:'Design a robotic assembly cell',visual:'Product and task',image:product,caption:'Figure 1 from the Project Specification. Starred dimensions are CAD assumptions, not additional supplied design data.',decision:'What must the cell assemble, and what is left for your team to design?',tasks:['Plan ten placements: lower panel, four wheels, four L3 spacers and upper panel.','Choose the robot, base, grasp strategy and end-effector. Motor installation and fastening are outside the required sequence.','Form an engineering team of 4–6; assign responsibilities while keeping a shared understanding of the system.'],fixed:['Panels: 500 × 260 mm · L3 spacers: 30 mm','Commercial industrial robot: no more than six controlled DOF'],whatif:'A robot can reach every part centre, but cannot approach a motor shaft in the required direction. Is it suitable?',evidence:['State the assembly sequence, fixed constraints and important assumptions.','Distinguish supplied data from team design choices.'],lessons:[1,10],demos:[quiz(7,'Quiz · pose versus configuration')],review:'Four engineering stages → EOI, PDR, FDR → final report and demonstration',source:[12,40]},
-    {tab:'Stage 1 · Concept',phase:'STAGE 1 · CONCEPT, WORKCELL AND TASK POSES',title:'Define the workcell and complete target poses',visual:'Fixed references; team-designed robot base',image:workcell,caption:'Figure 2 from the Project Specification. The references are fixed; robot base, grasp points and TCP remain design choices.',decision:'Which robot and base placement can execute the task with the required orientations?',tasks:['Shortlist by workcell size, reach, DOF and approach access; then check payload, tooling load offset and joint limits.','Define world, robot-base, work-object and TCP frames. Specify position, orientation and approach direction.','Keep the supplied references fixed. Justify the selected robot variant, base and tool strategy.'],fixed:['Panel rack X: −750, −370 mm · Y = 0','Spacer table: (500, 0); wheel table: (500, 550) mm','Assembly frame: (−800, 650, 300) mm · yaw 90°'],whatif:'Keep the assembly frame fixed but change the robot base. Which transformation changes, and which physical target stays unchanged?',evidence:['EOI: one summary slide with team/company, workcell concept, robot/model, DOF, payload, reach and suitability.','EOI is a technical discussion with the lecturer, not a formal class presentation.'],lessons:[1,2],demos:[quiz(1,'Quiz · read T and move along tool Z'),quiz(2,'Quiz · target axes and TCP offset')],review:'EOI · 5 marks · end of Class 2 / after Lecture 2',source:[45,50]},
-    {tab:'Stage 2 · DH',phase:'STAGE 2 · ROBOT KINEMATIC MODELLING',title:'Build and check the robot model',visual:'The same workcell; now model its robot',image:workcell,caption:'The brief does not prescribe a robot model. Assign frames to the commercial robot selected by your team.',decision:'Does your mathematical model describe the actual joint axes and reference pose?',tasks:['Number the robot joints and assign frames using one consistent DH convention.','Build the complete DH table, identifying the variable parameter for each joint.','Derive neighbouring-link transforms and the complete arm equation; check frame directions against the physical structure.'],fixed:['Use the actual selected robot geometry','State the convention and fixed joint offsets'],whatif:'The calculated matrix is a valid rigid transform, but its zero pose differs from the robot drawing. Has the model passed validation?',evidence:['PDR: two to three slides with robot/joint numbering, frames, DH table, one transform and overall arm equation.','Show at least one physical check of the frame or zero-pose assignment.'],lessons:[3,2],demos:[quiz(3,'Quiz · DH zero versus the reference drawing')],review:'PDR · 10 marks · end of Class 3 / after Lecture 3',source:[51,56]},
-    {tab:'Stage 3 · Validate',phase:'STAGE 3 · KINEMATIC VALIDATION AND MOTION FEASIBILITY',title:'Validate configurations and complete motion',visual:'Eight-stage baseline for one placement',image:product,caption:'Use the baseline for each of the ten placements. Sequence playback illustrates the operation order, not a validated robot simulation.',decision:'Can the chosen robot execute the whole transfer and insertion, not only its endpoints?',tasks:['Compare the MATLAB/Python model with the manual DH model. Define pick, approach, place and retreat TCP poses.','Run compatible IK; inspect branches, configurations, joint limits and physical plausibility.','Generate joint and Cartesian trajectories; inspect position, velocity and acceleration, preserving task orientation.','Revise team choices when checks fail, while keeping Figure 2 references fixed.'],fixed:['Wheel insertion must follow the actual motor-shaft axis','A Puma 560 exercise does not validate a different project robot'],whatif:'Both endpoint poses have valid IK solutions, but a straight Cartesian move fails halfway. Which checks are still missing?',evidence:['FDR: two to three slides with model, targets/configurations, reachability, joint-limit checks and basic trajectory results.','Explain at least one important modelling issue or correction.'],lessons:[4,5],demos:[quiz(7,'Quiz · same pose, different configuration'),quiz(8,'Quiz · joint interpolation, straight lines and zones')],review:'FDR · 10 marks · end of Class 5 / after Lecture 5',source:[57,64],workflow:true},
-    {tab:'Stage 4 · Integrate',phase:'STAGE 4 · PROGRAMMING AND INTEGRATED DEMONSTRATION',title:'Turn a feasible motion into an integrated cell',visual:'From targets to a controlled operation',image:product,caption:'The operation needs motion, grip/release actions, process decisions and evidence. Tool changes are optional team design additions.',decision:'What must the program know before the robot can perform the assembly reliably?',tasks:['Implement the eight-stage baseline, adding collision-avoiding via points and grasp/release actions as needed.','Define targets/configurations, tool/work-object data, motion types, speeds, zones and process placeholders.','Use the geometric Jacobian to analyse a demanding configuration or motion segment; state its frame and dimensions.','Integrate one advanced challenge and demonstrate the cell with engineering evidence.'],fixed:['ABB RAPID is the course exemplar; an equivalent selected-robot language is allowed','Animation alone is not evidence of reach, limits or collision clearance'],whatif:'The animation looks correct, but the program uses an incorrect TCP or work-object frame. What happens at execution?',evidence:['Runnable, organised MATLAB/Python and simulation/program files.','An explained Jacobian result and a justified motion/program design.','Use one Lecture 10 case to explain an existing integration decision and remaining commissioning work.'],lessons:[6,7,10],demos:[quiz(4,'Quiz · Jacobian columns'),quiz(5,'Quiz · independent directions and cancellation')],review:'Stage 4 → Final Engineering Report 35 + Presentation/Demonstration 40',source:[65,72],workflow:true},
-    {tab:'Choose · Challenge',phase:'ADVANCED ENGINEERING CHALLENGE · CHOOSE ONE',title:'Respond to a client change',visual:'One extension in the same cell',image:workcell,caption:'The selected challenge must modify and validate the same workcell and program, rather than become an unrelated demonstration.',decision:'Which client change will your team solve?',tasks:[],fixed:[],whatif:'The extra function works in isolation. What evidence shows that it is integrated into the assembly task?',evidence:['Define the client problem, perform appropriate analysis, modify the design/program and provide evidence.','The challenge contributes 10 marks within the existing totals: 5 in the report and 5 in the presentation/demonstration.'],lessons:[8],demos:[],review:'Choose one · Vision/calibration OR Force/compliance OR Collision-free planning',source:[76,100]},
-    {tab:'Finish · Evidence',phase:'FINAL REPORT, PRESENTATION AND DEMONSTRATION',title:'Defend the engineering proposal',visual:'Original tender and design-review process',image:process,caption:'Figure 3 from the Project Specification. EOI, PDR and FDR are assessed technical reviews with summary slides.',decision:'What can you demonstrate, reproduce and explain?',tasks:['Report the concept, frames, DH/FK/IK validation, trajectories, Jacobian, program, selected challenge and integrated simulation.','Upload runnable scripts and relevant simulation/program files before presenting.','Write the report in the team’s own words. Include contributions, AI Use Declaration, assumptions, limitations and remaining commissioning work.','Prepare approximately 15 minutes plus 3–5 minutes of technical questions; all members must be ready to answer.'],fixed:['Total: 100 = reviews 25 + report 35 + presentation/demonstration 40','Quiz and the optional L9 laboratory add no marks to this group-project total'],whatif:'A reviewer changes one assumption or asks you to modify one target. Can the team explain and reproduce the result?',evidence:['Development reviews: EOI 5 + PDR 10 + FDR 10 = 25.','Report: 5 + 8 + 10 + 7 + 5 = 35.','Presentation/demonstration: 10 + 10 + 10 + 10 = 40. See the full rubric.'],lessons:[10],demos:[{href:'quiz.html',label:'Use the concept Quiz to test your explanations'}],review:'Engineering evidence, reproducible results and professional communication',source:[101,152]}
-  ];
+  {
+    "tab": "Start · Brief",
+    "phase": "CLIENT BRIEF",
+    "title": "Understand the assembly brief",
+    "visual": "Product and task",
+    "image": "assets/project-f2.png",
+    "caption": "Figure 1 · product geometry. Starred dimensions are illustrative assumptions.",
+    "decision": "Read the task and its boundaries",
+    "tasks": [
+      "What is assembled? Ten placements: lower panel, four wheels, four spacers and upper panel.",
+      "What is supplied? Motors are installed; fastening is excluded. Figure 2 fixes the supply and assembly references.",
+      "What does your team design? Robot, base, gripper, grasp points, TCP and feasible motion."
+    ],
+    "fixed": [
+      "Panels: 500 × 260 mm · L3 spacers: 30 mm",
+      "Commercial industrial robot: no more than six controlled DOF"
+    ],
+    "whatif": "A robot can reach every required point. Does this prove it can complete the task with the required tool orientations?",
+    "evidence": [
+      "Identify the fixed data, design choices and task boundary.",
+      "Team arrangements, assessment and final submissions are listed below."
+    ],
+    "lessons": [
+      1,
+      10
+    ],
+    "demos": [
+      {
+        "href": "quiz.html",
+        "label": "Quiz · rotations, DH and Jacobian"
+      }
+    ],
+    "review": "Four engineering stages → EOI, PDR, FDR → final report and demonstration",
+    "source": [
+      12,
+      40
+    ],
+    "specSection": "§§1–3 · brief and constraints"
+  },
+  {
+    "tab": "Stage 1 · Concept",
+    "phase": "STAGE 1 · CONCEPT, WORKCELL AND TASK POSES",
+    "title": "Select the robot, base and tool",
+    "visual": "Fixed references; team-designed robot base",
+    "image": "assets/project-f3.png",
+    "caption": "Figure 2 · fixed supply and assembly references; robot base and tool are team choices.",
+    "decision": "Questions and tasks",
+    "tasks": [
+      "What is the assembly order, and where is each part picked and placed?",
+      "Where will you grip each part, and from which direction must the tool approach?",
+      "Which gripper and actuation suit panels, wheels and spacers? Are tool changes needed?",
+      "Which robot structure and DOF can provide the required tool orientations? Use at most six controlled DOF.",
+      "What reach is needed for all fixed stations, including approach positions and tool length?",
+      "Where should the robot base be placed, and how should it be oriented?",
+      "Which commercial model and variant fit? Check payload with tooling, load offset and joint limits.",
+      "How will you define world, base, work-object, TCP and representative target frames, including position and orientation?",
+      "Which dimensions, masses, contact points and clearances are assumptions? State and justify them."
+    ],
+    "fixed": [
+      "Panel rack X: −750, −370 mm · Y = 0",
+      "Spacer table: (500, 0); wheel table: (500, 550) mm",
+      "Assembly frame: (−800, 650, 300) mm · yaw 90°",
+      "Wheel insertion follows the motor-shaft axis; tool changes are optional."
+    ],
+    "whatif": "Keep the assembly frame fixed but change the robot base. Which transformation changes, and which physical target stays unchanged?",
+    "evidence": [
+      "EOI · 5 marks · end of Class 2 / after Lecture 2.",
+      "Bring one slide: team/company, assembly/workcell concept, selected robot/model, DOF, payload, reach and suitability."
+    ],
+    "lessons": [
+      1,
+      2
+    ],
+    "demos": [
+      {
+        "href": "quiz.html#q1",
+        "label": "Quiz · fixed and moving axes"
+      }
+    ],
+    "review": "EOI · 5 marks · end of Class 2 / after Lecture 2",
+    "source": [
+      45,
+      50
+    ],
+    "specSection": "§§3.1–3.2, 4.1 · concept and task definition"
+  },
+  {
+    "tab": "Stage 2 · DH",
+    "phase": "STAGE 2 · ROBOT KINEMATIC MODELLING",
+    "title": "Model the robot with DH",
+    "visual": "The same workcell; now model its robot",
+    "image": "assets/project-f3.png",
+    "caption": "Figure 2 · fixed supply and assembly references; robot base and tool are team choices.",
+    "decision": "Questions and tasks",
+    "tasks": [
+      "Number the selected robot’s joints. Which consistent DH convention and frame assignment will you use?",
+      "Complete the DH table. Which parameter varies at each joint, and which offsets remain fixed?",
+      "Derive representative neighbouring-link transforms and the complete base-to-tool arm equation.",
+      "Do the frame directions and reference pose match the physical robot? Show the check."
+    ],
+    "fixed": [
+      "Use the actual selected robot geometry",
+      "State the convention and fixed joint offsets"
+    ],
+    "whatif": "The calculated matrix is a valid rigid transform, but its zero pose differs from the robot drawing. Has the model passed validation?",
+    "evidence": [
+      "PDR · 10 marks · end of Class 3 / after Lecture 3.",
+      "Bring 2–3 slides: robot/joint numbering, frames, DH table, one transform and the complete arm equation."
+    ],
+    "lessons": [
+      3,
+      2
+    ],
+    "demos": [
+      {
+        "href": "quiz.html#q2",
+        "label": "Quiz · assign and repair DH frames"
+      }
+    ],
+    "review": "PDR · 10 marks · end of Class 3 / after Lecture 3",
+    "source": [
+      51,
+      56
+    ],
+    "specSection": "§4.2 · kinematic modelling"
+  },
+  {
+    "tab": "Stage 3 · Validate",
+    "phase": "STAGE 3 · KINEMATIC VALIDATION AND MOTION FEASIBILITY",
+    "title": "Validate targets and trajectories",
+    "visual": "Eight-stage baseline for one placement",
+    "image": "assets/project-f2.png",
+    "caption": "Figure 1 · product geometry; apply the placement sequence to each of the ten parts.",
+    "decision": "Questions and tasks",
+    "tasks": [
+      "Does the MATLAB/Python robot model agree with your manual DH model?",
+      "Define representative pick, approach, place and retreat TCP poses, including orientation and configuration.",
+      "Which IK solutions are feasible? Check FK, joint limits, workspace and physical plausibility.",
+      "Generate joint and Cartesian trajectories. Check position, velocity, acceleration and required orientation.",
+      "If a check fails, what base, tool, grasp, target or motion choice will you revise? Keep Figure 2 stations fixed."
+    ],
+    "fixed": [
+      "Wheel insertion must follow the actual motor-shaft axis",
+      "A Puma 560 exercise does not validate a different project robot",
+      "Keep the selected robot’s real geometry; use a compatible analytical or numerical IK solver."
+    ],
+    "whatif": "Both endpoint poses have valid IK solutions, but a straight Cartesian move fails halfway. Which checks are still missing?",
+    "evidence": [
+      "FDR · 10 marks · end of Class 5 / after Lecture 5.",
+      "Bring 2–3 slides: software model, targets/configurations, reachability, joint-limit checks, basic trajectories and one issue or correction."
+    ],
+    "lessons": [
+      4,
+      5
+    ],
+    "demos": [],
+    "review": "FDR · 10 marks · end of Class 5 / after Lecture 5",
+    "source": [
+      57,
+      64
+    ],
+    "workflow": true,
+    "specSection": "§4.3 · validation and motion feasibility"
+  },
+  {
+    "tab": "Stage 4 · Integrate",
+    "phase": "STAGE 4 · PROGRAMMING AND INTEGRATED DEMONSTRATION",
+    "title": "Program and demonstrate the cell",
+    "visual": "From targets to a controlled operation",
+    "image": "assets/project-f2.png",
+    "caption": "Figure 1 · product geometry; apply the placement sequence to each of the ten parts.",
+    "decision": "Questions and tasks",
+    "tasks": [
+      "Program the eight-stage placement sequence, with grip/release actions and collision-avoiding via points as needed.",
+      "Define targets/configurations, tool/work-object data, motion types, speeds, zones and process I/O placeholders.",
+      "Use J for one demanding configuration or motion segment. State its frame/dimensions; interpret speed amplification, rank or conditioning.",
+      "Distinguish angular velocity from Euler/RPY angle rates.",
+      "Complete one advanced challenge and integrate it into the same cell and program.",
+      "Demonstrate the integrated cell with engineering evidence. Use one Lecture 10 case to explain an integration decision and remaining commissioning work."
+    ],
+    "fixed": [
+      "ABB RAPID is the course exemplar; an equivalent selected-robot language is allowed",
+      "Animation alone is not evidence of reach, limits or collision clearance"
+    ],
+    "whatif": "The animation looks correct, but the program uses an incorrect TCP or work-object frame. What happens at execution?",
+    "evidence": [
+      "Submit the integrated program/simulation and engineering evidence in the final report and demonstration.",
+      "Final Engineering Report: 35 marks. Final Presentation & Demonstration: 40 marks."
+    ],
+    "lessons": [
+      6,
+      7,
+      10
+    ],
+    "demos": [
+      {
+        "href": "quiz.html#q3",
+        "label": "Quiz · Jacobian and singularity"
+      },
+      
+    ],
+    "review": "Stage 4 → Final Engineering Report 35 + Presentation/Demonstration 40",
+    "source": [
+      65,
+      72
+    ],
+    "workflow": true,
+    "specSection": "§4.4 · programming and integration"
+  },
+  {
+    "tab": "Choose · Challenge",
+    "phase": "ADVANCED ENGINEERING CHALLENGE · CHOOSE ONE",
+    "title": "Choose one advanced challenge",
+    "visual": "One extension in the same cell",
+    "image": "assets/project-f3.png",
+    "caption": "Figure 2 · fixed supply and assembly references; robot base and tool are team choices.",
+    "decision": "Questions and tasks",
+    "tasks": [],
+    "fixed": [],
+    "whatif": "The extra function works in isolation. What evidence shows that it is integrated into the assembly task?",
+    "evidence": [
+      "Choose A, B or C; define the client problem, analysis, design/program change, evidence and limitations.",
+      "The challenge’s 10 marks are included in the existing totals: 5 in the report and 5 in the presentation/demonstration."
+    ],
+    "lessons": [
+      8
+    ],
+    "demos": [],
+    "review": "Choose one · Vision/calibration OR Force/compliance OR Collision-free planning",
+    "source": [
+      76,
+      99
+    ],
+    "specSection": "§5 · choose one challenge"
+  },
+  {
+    "tab": "Finish · Evidence",
+    "phase": "FINAL REPORT, PRESENTATION AND DEMONSTRATION",
+    "title": "Prepare the final submission",
+    "visual": "Original tender and design-review process",
+    "image": "assets/project-f4.png",
+    "caption": "Figure 3 · tender and review process.",
+    "decision": "Questions and tasks",
+    "tasks": [
+      "Report the concept, workcell, frames, DH/FK/IK, trajectories, Jacobian, program, selected challenge and integrated results.",
+      "Upload organised, documented, runnable MATLAB/Python and simulation/program files before presenting.",
+      "Write the report in the team’s own words. Include assumptions, limitations, contributions and an AI Use Declaration.",
+      "Prepare about 15 minutes plus 3–5 minutes of questions. Three to six members may present; all must answer questions.",
+      "Explain the design decisions, demonstrate the evidence and state what remains before commissioning."
+    ],
+    "fixed": [
+      "Total: 100 = reviews 25 + report 35 + presentation/demonstration 40",
+      "Quiz and the optional L9 laboratory add no marks to this group-project total"
+    ],
+    "whatif": "A reviewer changes one assumption or asks you to modify one target. Can the team explain and reproduce the result?",
+    "evidence": [
+      "Reviews 25 + Final Engineering Report 35 + Final Presentation/Demonstration 40 = 100 marks.",
+      "Use the complete marking criteria in the Project Specification."
+    ],
+    "lessons": [
+      10
+    ],
+    "demos": [
+      {
+        "href": "quiz.html",
+        "label": "Quiz · check your understanding"
+      }
+    ],
+    "review": "Engineering evidence, reproducible results and professional communication",
+    "source": [
+      100,
+      152
+    ],
+    "specSection": "§§6–9 · tools, deliverables and assessment"
+  }
+];
   const challenges={
-    A:{title:'Vision and robot calibration',tasks:['One component may vary by ±40 mm in X/Y and ±15° in orientation.','Define camera, base, work-object, TCP and object frames; distinguish camera calibration, pose estimation, robot–camera transform and TCP calibration.','Compose measurement-to-TCP transforms and validate IK for at least two component locations. Discuss target-height uncertainty.'],fixed:['Simulated measurements are acceptable','A sophisticated image-processing algorithm is not required'],lessons:[8,2,4],demos:[quiz(9,'Quiz · pixels, depth and metric displacement'),quiz(2,'Quiz · frame axes and tool offset')]},
-    B:{title:'Force and compliance in assembly',tasks:['Wheels are occasionally damaged during insertion onto the motor shafts.','Use F = KΔx to explain why pure position control can generate excessive contact force.','Choose justified sensing/compliance and define approach, contact detection, reduced-speed insertion, monitoring, success/fault and retreat.'],fixed:['Specify reasonable contact, success and excessive-force criteria','Modify the program/control logic; discuss practical limits'],lessons:[7,6],demos:[quiz(4,'Quiz · Jacobian columns and joint action')]},
-    C:{title:'Collision-free robot path planning',tasks:['A new fixture or obstacle blocks the original transfer path.','Compare at least two paths/configurations. Use justified via points or an automated planner such as PRM/RRT.','Check every robot link and tool, margin, limits, orientation and singularity risk; validate the path before time-parameterising it.'],fixed:['L9 is optional support, not a compulsory detailed algorithm requirement','Fully checked, justified via points remain an acceptable solution'],lessons:[9,4,5],demos:[quiz(7,'Quiz · configuration and collision'),quiz(8,'Quiz · endpoint feasibility versus a complete path')]}
-  };
+  "A": {
+    "title": "Vision and robot calibration",
+    "tasks": [
+      "Client change: one part varies by ±40 mm in X/Y and ±15° in orientation.",
+      "Define camera, robot-base, work-object, TCP and component frames.",
+      "Separate intrinsics/distortion, object-pose estimation, robot–camera transform, TCP calibration and any fixture datum.",
+      "Compose the measurement-to-TCP transform chain. For eye-in-hand, include the current flange pose and camera mount.",
+      "Update pick poses for at least two part locations and run IK.",
+      "Discuss localisation, distortion and calibration/TCP/fixture uncertainty at task height; pixel error alone does not establish robot-target accuracy."
+    ],
+    "fixed": [
+      "Simulated measurements are acceptable",
+      "A sophisticated image-processing algorithm is not required"
+    ],
+    "lessons": [
+      8,
+      2,
+      4
+    ],
+    "demos": []
+  },
+  "B": {
+    "title": "Force and compliance in assembly",
+    "tasks": [
+      "Client change: wheels are damaged during insertion. Why can pure position control create excessive contact force? Use F = KΔx.",
+      "Select sensing, passive/active compliance or compliant tooling, and justify the combination.",
+      "Define approach, contact detection, reduced-speed insertion, monitoring, success/fault and retreat.",
+      "Set contact, success and excessive-force criteria; modify the control/program logic.",
+      "Explain practical benefits, limits and implementation."
+    ],
+    "fixed": [
+      "Specify reasonable contact, success and excessive-force criteria",
+      "Modify the program/control logic; discuss practical limits"
+    ],
+    "lessons": [
+      7,
+      6
+    ],
+    "demos": [
+      {
+        "href": "quiz.html#q3",
+        "label": "Quiz · joint action and Jacobian"
+      }
+    ]
+  },
+  "C": {
+    "title": "Collision-free robot path planning",
+    "tasks": [
+      "Client change: a new fixture or obstacle blocks the transfer. Add its geometry and show why the old route fails.",
+      "Create a collision-free route with justified via points or PRM/RRT.",
+      "Check all robot links, tool/carried part, clearance, joint limits, orientation and singularity risk.",
+      "Compare at least two paths or configurations and justify the choice.",
+      "Demonstrate the validated route, then time-parameterise it."
+    ],
+    "fixed": [
+      "L9 is optional support, not a compulsory detailed algorithm requirement",
+      "Fully checked, justified via points remain an acceptable solution"
+    ],
+    "lessons": [
+      9,
+      4,
+      5
+    ],
+    "demos": []
+  }
+};
   const lessons={
     1:{title:'Robot selection starts from the task',idea:'Reach is one constraint. Required approach direction, tooling load and configuration also matter.',points:['Use the actual robot variant, joint limits and manufacturer load information.','Payload includes the end-effector and carried part; load offset affects wrist loading.','Figure 2 fixes station references, not robot base or grasp points.'],example:'Decide how the robot approaches a wheel shaft before choosing the base position.',quiz:7},
     2:{title:'Frames and transformations',idea:'A point gives position. A frame also specifies orientation.',points:['R columns are the moving frame axes expressed in the reference frame.','The last column gives the moving origin position. Specify length units.','Convert work-object targets into the robot base frame before solving IK.'],math:'<sup>W</sup>T<sub>T</sub> = <sup>W</sup>T<sub>B</sub> <sup>B</sup>T<sub>F</sub> <sup>F</sup>T<sub>T</sub>',example:'Use the supplied assembly frame to transform an illustrative local point. This point is not a prescribed TCP target.',quiz:2,interactive:true},
@@ -37,10 +367,17 @@
   let stage=0,choice='A',workflowStep=0,timer=null;
   const workflowNames=['Home','Pick approach','Pick and grip','Pick retreat','Assembly approach','Assemble and release','Assembly retreat','Home'];
   const stop=()=>{if(timer!==null)clearInterval(timer);timer=null;};
-  function effective(){return stage===5?{...stages[5],...challenges[choice],title:'Respond to a client change',decision:challenges[choice].title}:stages[stage];}
-  function render(){stop();const s=effective();$('phase').textContent=s.phase;$('stage-title').textContent=s.title;$('visual-title').textContent=s.visual;$('project-image').src=s.image;$('project-image').alt=s.caption;$('figure-caption').textContent=s.caption;$('decision').textContent=s.decision;$('tasks').innerHTML=s.tasks.map(t=>`<li>${escape(t)}</li>`).join('');$('fixed-data').innerHTML=s.fixed.map(t=>`<p>${escape(t)}</p>`).join('');$('whatif').textContent=s.whatif;$('review').textContent=s.review;$('evidence').innerHTML='<ul>'+s.evidence.map(t=>`<li>${escape(t)}</li>`).join('')+'</ul>';$('evidence').hidden=true;$('evidence-toggle').setAttribute('aria-expanded','false');$('evidence-toggle').textContent='What evidence is needed?';$('lesson-links').innerHTML=s.lessons.map(n=>`<button class="lesson-link" data-lesson="${n}"><span>L${n}</span><b>${escape(lessons[n].title)}</b></button>`).join('');$('demo-links').innerHTML=s.demos.map(d=>`<a class="demo-link" href="${d.href}" target="_blank" rel="noopener">${escape(d.label)} ↗</a>`).join('');$('visual-extra').replaceChildren();
+  function effective(){return stage===5?{...stages[5],...challenges[choice],title:'Choose one advanced challenge',decision:challenges[choice].title}:stages[stage];}
+  function render(){stop();const s=effective();$('brief-admin').hidden=stage!==0;$('phase').textContent=s.phase;$('stage-title').textContent=s.title;$('visual-title').textContent=s.visual;$('project-image').src=s.image;$('project-image').alt=s.caption;$('figure-caption').textContent=s.caption;$('decision').textContent=s.decision;$('tasks').innerHTML=s.tasks.map(t=>`<li>${escape(t)}</li>`).join('');$('fixed-data').innerHTML=s.fixed.map(t=>`<p>${escape(t)}</p>`).join('');$('whatif').textContent=s.whatif;$('review').textContent=`Step ${stage+1} / ${stages.length}`;$('evidence').innerHTML='<ul>'+s.evidence.map(t=>`<li>${escape(t)}</li>`).join('')+'</ul>';$('evidence').hidden=false;$('evidence-toggle').hidden=true;$('stage-source').textContent='Project Specification '+s.specSection;document.querySelector('.whatif').open=false;$('lesson-links').innerHTML=s.lessons.map(n=>`<button class="lesson-link" data-lesson="${n}"><span>L${n}</span><b>${escape(lessons[n].title)}</b></button>`).join('');$('demo-links').innerHTML=s.demos.map(d=>`<a class="demo-link" href="${d.href}" target="_blank" rel="noopener">${escape(d.label)} ↗</a>`).join('');$('visual-extra').replaceChildren();
+    document.body.classList.toggle('project-brief',stage===0);$('brief-reach-panel').hidden=stage!==0;
+    $('demonstrations').open=false;$('demonstrations').hidden=stage!==0&&!s.workflow&&!s.demos.length;
+    $('brief-resources').hidden=false;
+    if(stage===0){$('brief-reach-panel').append($('visual-extra'));window.BJTUProjectReach.mount($('visual-extra'));}
+    else $('demo-content').prepend($('visual-extra'));
+    $('challenge-selector').replaceChildren();
+
     if(s.workflow){workflowStep=0;$('visual-extra').innerHTML='<div class="workflow">'+workflowNames.map((t,i)=>`<button data-flow="${i}" class="${i===2||i===5?'contact':''}">${i+1} · ${escape(t)}</button>`).join('')+'</div><p class="workflow-note" id="workflow-status"></p><button class="workflow-play" id="workflow-play">Play sequence</button>';updateFlow();$('workflow-play').onclick=()=>{if(timer!==null){stop();$('workflow-play').textContent='Play sequence';return;}$('workflow-play').textContent='Pause';timer=setInterval(()=>{workflowStep=(workflowStep+1)%8;updateFlow();},1100);};}
-    if(stage===5){const bar=document.createElement('div');bar.className='challenge-options';bar.innerHTML=['A','B','C'].map(k=>`<button data-challenge="${k}" class="${choice===k?'active':''}">Option ${k}</button>`).join('');$('visual-extra').append(bar);}
+    if(stage===5){const bar=document.createElement('div');bar.className='challenge-options';bar.innerHTML=['A','B','C'].map(k=>`<button data-challenge="${k}" class="${choice===k?'active':''}">Option ${k}</button>`).join('');$('challenge-selector').append(bar);}
     [...$('stages').children].forEach((b,i)=>{b.classList.toggle('active',i===stage);b.setAttribute('aria-current',i===stage?'step':'false');});$('prev').disabled=stage===0;$('next').disabled=stage===stages.length-1;history.replaceState(null,'',`#step-${stage}`);
   }
   function updateFlow(){document.querySelectorAll('[data-flow]').forEach((b,i)=>b.classList.toggle('active',i===workflowStep));const contact=workflowStep===2||workflowStep===5;$('workflow-status').textContent=`${workflowStep+1}. ${workflowNames[workflowStep]} · ${contact?'Fine stop for grip/release.':'Select motion and blending only after checking direction and clearance.'}`;}
@@ -48,7 +385,7 @@
   function openLesson(n){const l=lessons[n];$('lesson-dialog').classList.toggle('frame-lesson',!!l.interactive);$('lesson-number').textContent=`LECTURE ${n} · SINGLE-PAGE CLASSROOM NOTE`;$('lesson-title').textContent=l.title;$('lesson-body').innerHTML=`<p class="lesson-lead">${escape(l.idea)}</p>${l.math?`<div class="formula">${l.math}</div>`:''}<div class="lesson-grid"><div><h3>Use it in the project</h3><ul>${l.points.map(p=>`<li>${escape(p)}</li>`).join('')}</ul></div><div class="knowledge-box ${l.interactive?'':'green'}">${l.interactive?'<div id="frame-lab"></div>':`<h3>Check the meaning</h3><p>${escape(l.example)}</p>${l.code?`<pre>${escape(l.code)}</pre>`:''}`}</div></div><div class="lesson-footer"><a href="quiz.html" target="_blank" rel="noopener">Open interactive Quiz ↗</a><a href="${ppt(n)}" target="_blank" rel="noopener">Full Lecture ${n} PDF ↗</a><span>Classroom summary; original slides retain the full content.</span></div>`;if(l.interactive){const equation=$('lesson-body').querySelector(':scope > .formula'),grid=$('lesson-body').querySelector('.lesson-grid');grid.classList.add('frame-lesson-grid');grid.firstElementChild.append(equation);frameLab();}$('lesson-dialog').showModal();}
   const fmt=n=>Math.abs(n)<1e-7?'0':Number(n.toFixed(2)).toString();
   function frameLab(){const R=M.rpy(0,0,90),p=[-800,650,300],A=M.pose(R,p);$('frame-lab').innerHTML='<h3>Fixed assembly frame → local point</h3><div class="frame-matrix-wrap"><div class="matrix-row"><span class="matrix-label"><sup>W</sup>T<sub>A</sub> =</span><span class="matrix">'+A.flat().map(v=>`<span>${fmt(v)}</span>`).join('')+'</span></div><p class="caption">Translation in mm; supplied assembly yaw = 90°. The robot base is not assumed to be the world frame.</p></div><div class="frame-offsets">'+['x','y','z'].map((k,i)=>`<div class="offset-control"><label for="point-${k}">${k}<sub>A</sub> (mm)</label><input id="point-number-${k}" aria-label="Local point ${k} numeric value" type="number" min="${i===2?0:-100}" max="100" step="10" value="${i===0?50:0}"><input id="point-${k}" aria-label="Local point ${k}" type="range" min="${i===2?0:-100}" max="100" step="10" value="${i===0?50:0}"></div>`).join('')+'</div><div id="point-result" aria-live="polite"></div><p class="caption">Illustrative local point, not a supplied grasp or TCP target. Assembly frame and all fixed brief data stay unchanged.</p>';$('frame-lab').querySelector('.matrix-label').remove();$('frame-lab').querySelector('h3').innerHTML='Assembly frame <sup>W</sup>T<sub>A</sub> · local point experiment';const vals=[50,0,0];function update(){const w=M.add(p,M.mul(R,vals));$('point-result').innerHTML=`p<sub>W</sub> = R p<sub>A</sub> + t<br><b>(${w.map(fmt).join(', ')}) mm</b>`;}['x','y','z'].forEach((k,i)=>{const number=$('point-number-'+k),slider=$('point-'+k);for(const input of[number,slider])input.oninput=()=>{if(input.value===''||!Number.isFinite(input.valueAsNumber))return;vals[i]=Math.max(i===2?0:-100,Math.min(100,input.valueAsNumber));if(input===slider)number.value=vals[i];slider.value=vals[i];update();};number.onchange=()=>number.value=vals[i];});update();}
-  function specification(full){$('spec-title').textContent=full?'Full Project Specification':`${stages[stage].tab} · Original requirements`;$('source-info').innerHTML=`Source: <a href="../Project%20Materials/BJTU%20Robotics%20and%20Flexible%20Automation%20Project%20Specification.pdf" target="_blank" rel="noopener">Project Specification (PDF)</a>`;if(full)$('spec-body').innerHTML=source.documentHtml;else{const [a,b]=stages[stage].source;$('spec-body').innerHTML=Object.entries(source.paragraphs).filter(([i,t])=>Number(i)>=a&&Number(i)<=b&&t).map(([,t])=>`<p>${escape(t)}</p>`).join('');}$('spec-dialog').showModal();}
+  function specification(full){$('spec-title').textContent=full?'Full Project Specification':`${stages[stage].tab} · Original requirements`;$('source-info').innerHTML=`Source: <a href="../Project%20Materials/BJTU%20Robotics%20and%20Flexible%20Automation%20Project%20Specification.pdf" target="_blank" rel="noopener">Project Specification (PDF)</a>`;if(full)$('spec-body').innerHTML=source.documentHtml;else{const [a,b]=stages[stage].source;$('spec-body').innerHTML=Object.entries(source.paragraphs).filter(([i,t])=>t&&((Number(i)>=a&&Number(i)<=b)||(stage===1&&Number(i)>=25&&Number(i)<=38))).map(([,t])=>`<p>${escape(t)}</p>`).join('');}$('spec-dialog').showModal();}
   stages.forEach((s,i)=>{const b=document.createElement('button');b.textContent=s.tab;b.onclick=()=>change(i);$('stages').append(b);});
   document.addEventListener('click',e=>{const close=e.target.closest('[data-close]');if(close)$(close.dataset.close).close();const learn=e.target.closest('[data-lesson]');if(learn)openLesson(Number(learn.dataset.lesson));const option=e.target.closest('[data-challenge]');if(option){choice=option.dataset.challenge;render();}const flow=e.target.closest('[data-flow]');if(flow){stop();workflowStep=Number(flow.dataset.flow);updateFlow();$('workflow-play').textContent='Play sequence';}});
   $('evidence-toggle').onclick=()=>{const open=$('evidence').hidden;$('evidence').hidden=!open;$('evidence-toggle').setAttribute('aria-expanded',String(open));$('evidence-toggle').textContent=open?'Hide evidence requirements':'What evidence is needed?';};
