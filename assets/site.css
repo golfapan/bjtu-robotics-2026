@@ -63,3 +63,12 @@ h1{font-size:clamp(43px,4.6vw,68px);line-height:1.08;letter-spacing:-.05em;margi
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.lecture-card,.resource-card{transition:none}}
 
 .classroom-actions{display:flex;flex-wrap:wrap;gap:12px;margin:0 0 20px}.classroom-actions a{padding:10px 16px;border:1px solid #b0c9cf;border-radius:8px;background:#eaf3fa;color:#16466c;font-size:16px;font-weight:650;text-decoration:none}.classroom-actions a:nth-child(2){background:#eaf5ee;color:#1d6a43}.classroom-actions a:focus-visible{outline:3px solid #276fd0;outline-offset:3px}
+
+/* Course resources: equal cards with a full-width text column. */
+#resources .resource-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+#resources .resource-card{min-width:0;min-height:215px;padding:26px 28px}
+#resources .resource-type{margin-bottom:16px}
+#resources .resource-card strong{font-size:20px;line-height:1.35}
+#resources .resource-card small{font-size:14px;line-height:1.55;max-width:48ch}
+#resources .resource-card:focus-visible{outline:3px solid var(--teal);outline-offset:3px}
+@media(max-width:680px){#resources .resource-grid{grid-template-columns:1fr}#resources .resource-card{min-height:190px;padding:22px}}

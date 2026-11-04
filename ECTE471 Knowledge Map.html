@@ -1,0 +1,577 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ECTE471 Knowledge Map</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@500;600&display=swap">
+<style>
+/* Layout: two figures. The first is the technical territory of robotics drawn
+   on its own terms, with this subject's footprint shaded onto it. The second
+   is the subject's own ten-lecture structure. Selecting in one lights the other. */
+:root{
+  --aud:#6D28D9; --aud2:#C98A06;
+  --paper:#F2F4F6; --panel:#FFFFFF; --panel-2:#F9FAFC;
+  --ink:#151C22; --ink-2:#4B5A65; --ink-3:#798894;
+  --rule:#CCD6DD; --rule-soft:#E3E9ED;
+  --core:#1C6B48; --ext:#26658C; --named:#8A5C16; --pre:#5B5F93; --none:#95A3AD;
+  --core-w:#E2F0E9; --ext-w:#E3EEF6; --named-w:#F8F0E1; --pre-w:#EBECF6; --none-w:#F1F4F6;
+  --hi:#B4381F;
+  --serif:"IBM Plex Serif","Songti SC",Georgia,serif;
+  --sans:"IBM Plex Sans","PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
+  --mono:"IBM Plex Mono","SFMono-Regular",Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --aud:#B49BE8; --aud2:#EFC257;
+  --paper:#10151A; --panel:#161D23; --panel-2:#131920;
+  --ink:#E2E9EF; --ink-2:#A2B0BB; --ink-3:#72818D;
+  --rule:#2D373E; --rule-soft:#202930;
+  --core:#6FC79A; --ext:#6FB4D6; --named:#DCA85A; --pre:#A3A7E0; --none:#5E6C76;
+  --core-w:#13261D; --ext-w:#13232C; --named-w:#282013; --pre-w:#1C1D2B; --none-w:#171D22;
+  --hi:#F0836A;
+  color-scheme:dark; } }
+:root[data-theme="dark"]{
+  --aud:#B49BE8; --aud2:#EFC257;
+  --paper:#10151A; --panel:#161D23; --panel-2:#131920;
+  --ink:#E2E9EF; --ink-2:#A2B0BB; --ink-3:#72818D;
+  --rule:#2D373E; --rule-soft:#202930;
+  --core:#6FC79A; --ext:#6FB4D6; --named:#DCA85A; --pre:#A3A7E0; --none:#5E6C76;
+  --core-w:#13261D; --ext-w:#13232C; --named-w:#282013; --pre-w:#1C1D2B; --none-w:#171D22;
+  --hi:#F0836A;
+  color-scheme:dark; }
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
+     font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.wrap{padding-inline:20px;padding-block:28px 56px;max-width:1500px;margin:0 auto}
+
+header{display:flex;flex-wrap:wrap;gap:18px 40px;align-items:flex-end;
+       border-bottom:1px solid var(--rule);padding-bottom:16px}
+h1{font-family:var(--serif);font-weight:600;font-size:clamp(23px,3.2vw,32px);
+   margin:0;letter-spacing:-.015em;text-wrap:balance}
+.sub{color:var(--ink-2);margin:6px 0 0;max-width:70ch;font-size:13.5px}
+.meta{display:flex;gap:20px;margin-left:auto;font-family:var(--mono);font-size:10.5px;
+      color:var(--ink-3);letter-spacing:.04em}
+.meta b{display:block;font-family:var(--serif);font-size:19px;color:var(--ink);
+        font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:0}
+.meta .c b{color:var(--core)} .meta .e b{color:var(--ext)}
+.meta .n b{color:var(--named)} .meta .z b{color:var(--ink-3)}
+
+h2{font-family:var(--serif);font-weight:600;font-size:16.5px;margin:34px 0 4px;
+   letter-spacing:-.01em}
+.note{color:var(--ink-2);font-size:12.5px;margin:0 0 12px;max-width:82ch}
+
+figure{margin:0}
+.canvas{background:var(--panel);border:1px solid var(--rule);border-radius:3px;
+        overflow-x:auto;padding:2px}
+svg.fig{display:block;width:100%;height:auto}
+#f1{min-width:1240px} #f2{min-width:1100px}
+figcaption{color:var(--ink-3);font-size:12px;margin-top:8px;max-width:88ch}
+
+text{font-family:"IBM Plex Sans","PingFang SC","Microsoft YaHei",sans-serif;
+     dominant-baseline:middle}
+.domhdr rect{fill:var(--panel-2);stroke:var(--rule-soft)}
+.domhdr .dt{fill:var(--ink);font-size:11.5px;font-weight:600}
+.domhdr .de{fill:var(--ink-3);font-size:8.6px;font-family:var(--mono)}
+.domhdr .dn{fill:var(--ink-3);font-size:8.6px;font-family:var(--mono)}
+.cell{cursor:pointer}
+.cell rect{stroke-width:1}
+.cell rect.aud{stroke:none}
+.cell rect.a-maker{fill:var(--aud)}
+.cell rect.a-both{fill:var(--aud2)}
+.aud-user{display:none}
+.frm{display:inline-block;width:22px;height:13px;border-radius:2px;vertical-align:-2px;
+     flex:none;border:1px solid var(--ink-3)}
+.frm.dash{border-style:dashed}
+.audkey{display:inline-block;width:5px;height:16px;border-radius:1.5px;
+        vertical-align:-3px;flex:none}
+.audkey.maker{background:var(--aud)}
+.audkey.both{background:var(--aud2);height:9px;vertical-align:-1px}
+.audkey.none{background:transparent;border:1px dashed var(--rule)}
+.audfig{border:1px solid var(--rule);border-radius:3px;background:var(--panel);
+        padding:13px 16px;margin-top:12px}
+.audrow{display:grid;grid-template-columns:142px 1fr 150px;gap:12px;align-items:center;
+        padding:7px 0;border-bottom:1px solid var(--rule-soft)}
+.audrow:last-child{border-bottom:0}
+.audrow .nm{font-size:12.5px}
+.audrow .nm i.audkey{display:inline-block;vertical-align:-3px}
+.audrow .nm > i:not(.audkey){font-style:normal;color:var(--ink-3);font-size:10.5px;
+        display:block;margin-left:12px}
+.audbar{display:flex;height:17px;border-radius:2px;overflow:hidden;background:var(--none-w);
+        border:1px solid var(--rule);min-width:0}
+.audbar i{display:block;height:100%}
+.audbar .bc{background:var(--core)} .audbar .be{background:var(--ext)}
+.audrow .num{font-family:var(--mono);font-size:11px;color:var(--ink-2);
+             font-variant-numeric:tabular-nums;text-align:right}
+.audrow .num b{color:var(--ink);font-weight:600}
+.cell .lab{font-size:10.4px}
+.cell .tag{font-size:8.4px;font-family:var(--mono)}
+.s-core rect{fill:var(--core-w);stroke:var(--core)}
+.s-core .lab{fill:var(--core)} .s-core .tag{fill:var(--core)}
+.s-ext rect{fill:var(--ext-w);stroke:var(--ext)}
+.s-ext .lab{fill:var(--ext)} .s-ext .tag{fill:var(--ext)}
+.s-named rect{fill:var(--named-w);stroke:var(--named);stroke-dasharray:4 2.5}
+.s-named .lab{fill:var(--named)} .s-named .tag{fill:var(--named)}
+.s-pre rect{fill:var(--pre-w);stroke:var(--pre);stroke-dasharray:4 2.5}
+.s-pre .lab{fill:var(--pre)} .s-pre .tag{fill:var(--pre)}
+.s-none rect{fill:var(--none-w);stroke:var(--none);stroke-dasharray:4 2.5;opacity:.8}
+.s-none .lab{fill:var(--none)}
+svg.sel .cell{opacity:.22} svg.sel .cell.on{opacity:1}
+svg.sel .cell.on rect{stroke-width:2.2;stroke:var(--hi)}
+
+.lec{cursor:pointer}
+.lec rect{fill:var(--panel-2);stroke:var(--rule);stroke-width:1.1}
+.lec .ln{font-size:9.5px;font-family:var(--mono);fill:var(--ink-3)}
+.lec .lt{font-size:11.6px;fill:var(--ink);font-weight:500}
+.lec.on rect{stroke:var(--hi);stroke-width:2.2;fill:var(--panel)}
+.lec.on .lt{fill:var(--hi)}
+.lec.opt rect{stroke-dasharray:4 3}
+.larc{fill:none;stroke:var(--ink-3);stroke-width:1.1;opacity:.34}
+.larc.spine{opacity:.75;stroke-width:1.6}
+svg.sel2 .larc{opacity:.12}
+svg.sel2 .larc.hot{stroke:var(--hi);opacity:.95;stroke-width:1.8}
+svg.sel2 .lec{opacity:.3} svg.sel2 .lec.on,svg.sel2 .lec.rel{opacity:1}
+.fp rect{stroke:none}
+.fp .f0{fill:var(--rule)} .fp .f1{fill:var(--core)}
+
+.panel{border:1px solid var(--rule);border-radius:3px;background:var(--panel);
+       padding:14px 16px;margin-top:12px;min-height:104px}
+.panel .hd{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:baseline}
+.panel .zh{font-family:var(--serif);font-size:16px;font-weight:600}
+.panel .en{color:var(--ink-3);font-size:12px}
+.panel .meta2{display:flex;flex-wrap:wrap;gap:6px 22px;margin-top:9px;font-size:12.5px;
+              color:var(--ink-2)}
+.panel .meta2 b{font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;
+                color:var(--ink-3);font-weight:400;margin-right:6px}
+.panel p{font-size:12.5px;color:var(--ink-2);margin:9px 0 0}
+.hint{color:var(--ink-3);font-size:12.5px;margin:0}
+.chip{display:inline-block;font-size:11.5px;padding:3px 8px;margin:2px 4px 2px 0;
+      border:1px solid var(--rule);border-radius:2px;background:var(--panel-2);
+      color:var(--ink);cursor:pointer;font-family:var(--sans)}
+.chip:hover{border-color:var(--ink-3)}
+
+.b{display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.05em;
+   padding:2px 6px;border-radius:2px;white-space:nowrap}
+.b-core{background:var(--core-w);color:var(--core)}
+.b-ext{background:var(--ext-w);color:var(--ext)}
+.b-named{background:var(--named-w);color:var(--named)}
+.b-pre{background:var(--pre-w);color:var(--pre)}
+.b-none{background:var(--none-w);color:var(--ink-3);border:1px solid var(--rule)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:11.5px;color:var(--ink-2);
+        margin-top:10px;align-items:center}
+.tools{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 10px}
+button{font-family:var(--sans);font-size:12px;background:var(--panel);color:var(--ink-2);
+       border:1px solid var(--rule);border-radius:2px;padding:5px 10px;cursor:pointer}
+button:hover{border-color:var(--ink-3)}
+button:focus-visible{outline:2px solid var(--ext);outline-offset:2px}
+.cell:focus-visible rect,.lec:focus-visible rect{stroke-width:2.6}
+@media (max-width:700px){ .meta{margin-left:0;gap:14px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div>
+    <h1>ECTE471 Knowledge Map</h1>
+    <p class="sub">第一张图是机器人技术本身的版图，按学科自己的结构铺开，与本课无关；本课覆盖的那一块被着色标出来。第二张图是这十讲自己的顺序与依赖结构。点其中一张的任意一块，另一张会亮起对应的部分。</p>
+  </div>
+  <div class="meta">
+    <div class="c">讲授<b id="n-core">—</b></div>
+    <div class="e">扩展<b id="n-ext">—</b></div>
+    <div class="n">点到<b id="n-named">—</b></div>
+    <div class="z">不涉及<b id="n-none">—</b></div>
+  </div>
+</header>
+
+<h2>图一 · 机器人技术版图，与本课的覆盖范围</h2>
+<p class="note">九个技术领域、73 个细分方向，这是机器人学作为一门工程学科的全貌，不是按本课的讲次排的。着色的格子是本课覆盖到的，右上角标出由哪一讲承担。灰色格子是这门课完全不进入的区域。</p>
+<p class="tools" id="tools1"></p>
+<figure>
+  <div class="canvas"><svg class="fig" id="f1" role="img"
+    aria-label="机器人技术版图：九个领域共 73 个细分方向，其中 24 个由本课核心讲授、8 个作为扩展、6 个仅点到、34 个不涉及。覆盖集中在运动学、感知与系统实现，动力学与自主学习两列几乎全部空白。每格左侧的竖条标出受众：紫色整条是机器人制造商需要，黄色半条是制造商与系统集成商都需要，没有条是系统集成商需要。"></svg></div>
+  <figcaption>一眼可读的结论：覆盖沿着「几何 → 运动学 → 感知标定 → 工业实现」这条线集中，动力学一列完整空白，控制一列只保留了与接触相关的三格，自主与学习一列只有两格扩展。每格左侧的竖条标出受众：紫色整条=机器人制造商，黄色半条=两者都需要，没有条=系统集成商这一侧的事。</figcaption>
+</figure>
+<div class="legend" id="leg1"></div>
+<div class="legend">
+  <span><i class="frm solid"></i> 实线框 · 课上真的讲了</span>
+  <span><i class="frm dash"></i> 虚线框 · 没有真的讲（仅提及、先修或不涉及）</span>
+</div>
+
+<h2>机器人制造商 vs 系统集成商</h2>
+<p class="note">同一张版图，换一个问题来看：哪些是<b>机器人制造商</b>（robot manufacturer）要解决的，哪些是<b>系统集成商</b>（system integrator）要解决的。两者有一大片重叠——几何、运动学、规划的数学是共用的——但两端的专属区域相当不同。本课培养的是系统集成商，覆盖率的差别正好说明了这一点：动力学整列属于制造商，所以不讲。</p>
+<div class="audfig" id="audfig"></div>
+<div class="legend">
+  <span><i class="audkey maker"></i> 紫色整条 · 机器人制造商</span>
+  <span><i class="audkey both"></i> 黄色半条 · 两者都需要</span>
+  <span><i class="audkey none"></i> 无条 · 系统集成商</span>
+  <span style="color:var(--ink-3)">图一每格左侧的竖条就是这个标记</span>
+</div>
+
+<h2>图二 · 本课十讲的顺序与依赖结构</h2>
+<p class="note">下排是授课顺序，上方的弧线是真实的知识依赖——哪一讲必须先于哪一讲。每讲下方的九个小格是它在图一里触及的领域。</p>
+<figure>
+  <div class="canvas"><svg class="fig" id="f2" role="img"
+    aria-label="十讲的依赖结构：L1 到 L6 构成主链，L7 由 L3 和 L4 分出，L8 由 L1 和 L2 分出，L9 由 L4 和 L5 分出且为可选模块，L10 汇总 L6 与 L8。所有依赖边都与授课顺序一致。"></svg></div>
+  <figcaption>所有依赖边都指向右侧，说明授课顺序与知识依赖没有冲突。L7 与 L8 是从主链上分出的两条支线，L9 是挂在 L5 之后的可选模块，L10 不引入新技术，只把 L6 与 L8 放进工业语境。</figcaption>
+</figure>
+
+<div class="panel" id="panel"></div>
+
+</div>
+
+<script>
+/* ---------------- the field ---------------- */
+const DOM = [
+ ["数学与表示","Mathematical foundations"],
+ ["机构与硬件","Mechanism & hardware"],
+ ["运动学","Kinematics"],
+ ["动力学","Dynamics"],
+ ["控制","Control"],
+ ["规划","Planning"],
+ ["感知","Perception"],
+ ["自主与学习","Autonomy & learning"],
+ ["系统、实现与部署","Systems & deployment"]
+];
+
+/* dom, 中文, English, state, lectures, note */
+const LEAF = [
+[0,"线性代数与矩阵运算","Linear algebra","pre",[],"本课假定已有，不再讲授。","both"],
+[0,"旋转表示 SO(3)、Euler、四元数","Rotation representations","core",[2],"L2 的主体，三种参数化都讲并给出转换。","both"],
+[0,"齐次变换 SE(3) 与坐标链","Homogeneous transforms","core",[2],"整门课的通用语言，后面每一讲都在用。","both"],
+[0,"旋量理论与李群李代数","Screw theory, Lie groups","none",[],"现代教材（Lynch & Park）的主线，本课走经典 DH 路线。","both"],
+[0,"概率与状态估计基础","Probability and estimation","none",[],"滤波、融合、SLAM 的数学前提。","both"],
+[0,"数值优化基础","Numerical optimisation","none",[],"优化型规划与标定求解的底层。","both"],
+[0,"数值线代：SVD 与条件数","SVD and conditioning","named",[7],"L7 讨论奇异时提到条件数，没有展开。","both"],
+
+[1,"串联机械臂构型","Serial manipulator architectures","core",[1],"L1 讲六种常见构型与选型取舍。","both"],
+[1,"并联与闭链机构","Parallel and closed-chain","none",[],"Delta、Stewart 平台一类，完全不涉及。","both"],
+[1,"冗余与超冗余机构","Redundant manipulators","none",[],"七轴及以上，连同零空间利用一起缺席。","both"],
+[1,"软体与柔性机构","Soft and compliant mechanisms","none",[],"","maker"],
+[1,"移动平台与底盘","Mobile platforms","none",[],"","maker"],
+[1,"末端执行器与夹持","End-effectors and grasping","core",[1],"L1 讲夹爪选型；灵巧手与抓取力学不涉及。","user"],
+[1,"驱动器与传动","Actuators and transmissions","none",[],"电机、减速器、回差——UOW 的 MECH950 覆盖这部分。","maker"],
+[1,"关节传感与编码器","Joint sensing and encoders","named",[1],"L1 讲标定层级时提到编码器与旋转变压器。","maker"],
+
+[2,"正运动学与 DH 建模","Forward kinematics and DH","core",[3],"L3 整讲，含 Alpha II 与 SCARA 两个完整例子。","both"],
+[2,"逆运动学：解析与数值","Inverse kinematics","core",[4],"L4 整讲，解析解、数值解与求解器选择。","both"],
+[2,"微分运动学与雅可比","Differential kinematics","core",[7],"L7 前两部分。","both"],
+[2,"奇异性分析","Singularity analysis","core",[4,7],"L4 给物理含义，L7 给秩亏的数学。","both"],
+[2,"可操作度与条件数","Manipulability measures","none",[],"评价位形好坏的标准工具，没有讲。","both"],
+[2,"冗余解算与零空间","Redundancy resolution","none",[],"","both"],
+[2,"工作空间与可达性分析","Workspace analysis","core",[1,4],"L1 讲数据表上的工作范围，L4 讲解的边界。","both"],
+[2,"运动学标定与参数辨识","Kinematic calibration","named",[1],"L1.26 把它列为三级标定之一，没有方法。","user"],
+
+[3,"刚体动力学建模","Rigid-body dynamics","none",[],"质量、惯量、科氏力——整列的起点。","maker"],
+[3,"牛顿-欧拉与拉格朗日","Newton–Euler and Lagrange","none",[],"","maker"],
+[3,"惯性参数辨识","Inertial parameter identification","none",[],"","maker"],
+[3,"接触与碰撞动力学","Contact and impact dynamics","none",[],"Challenge B 的插入过程其实属于这里。","maker"],
+[3,"柔性关节与柔性连杆","Flexible joints and links","none",[],"","maker"],
+[3,"负载与关节力矩估计","Load and joint torque estimation","none",[],"选电机、判过载的依据。","maker"],
+
+[4,"关节位置 / 速度伺服","Joint servo control","none",[],"机器人控制器里真正在跑的那一层。","maker"],
+[4,"计算力矩与前馈","Computed torque and feedforward","none",[],"","maker"],
+[4,"阻抗与导纳控制","Impedance and admittance","core",[7],"L7.30 给出三种接触控制策略的概念对比。","both"],
+[4,"力 / 位混合控制","Hybrid force–position","core",[7],"L7.31 讲方向分解。","both"],
+[4,"刚度与柔顺设计","Stiffness and compliance","core",[7],"L7.27–29，含笛卡尔刚度耦合。","both"],
+[4,"自适应与鲁棒控制","Adaptive and robust control","none",[],"","maker"],
+[4,"视觉伺服","Visual servoing","named",[8],"L8 第81页已简要点名并解释重复视觉修正；属于选学介绍，未推导视觉伺服控制律，不升级为核心考核要求。","user"],
+[4,"学习型控制","Learning-based control","none",[],"","both"],
+
+[5,"轨迹生成与时间律","Trajectory generation","core",[5],"L5 的主体：三次、五次、梯形速度。","both"],
+[5,"姿态插值","Orientation interpolation","core",[5],"L5.29–31。","both"],
+[5,"几何路径规划与势场","Classical path planning","ext",[9],"L9 的可选模块，课表只用其中八页。","user"],
+[5,"采样规划 PRM / RRT","Sampling-based planning","ext",[9],"同上，Challenge C 的技术基础。","user"],
+[5,"优化型规划","Optimisation-based planning","ext",[9],"CHOMP / STOMP，仅概念。","user"],
+[5,"抓取规划","Grasp planning","none",[],"抓哪里、怎么抓稳，完全不涉及。","user"],
+[5,"装配序列规划","Assembly sequence planning","named",[1,5],"项目要求给出序列，但不讲如何规划序列。","user"],
+[5,"任务与运动联合规划","Task and motion planning","none",[],"","user"],
+[5,"多机器人协调","Multi-robot coordination","none",[],"","user"],
+
+[6,"成像与相机模型","Imaging and camera models","core",[8],"L8 Part 1 与 Part 3，含针孔与薄透镜。","user"],
+[6,"相机标定与畸变","Camera calibration","core",[8],"L8.47–49。","user"],
+[6,"手眼标定","Hand–eye calibration","core",[8],"L8.51，Challenge A 的核心。","user"],
+[6,"位姿估计 PnP","Pose estimation","core",[8],"L8.50。","user"],
+[6,"2D 特征与模板匹配","2D features and matching","ext",[8],"L8 Part 5，课表标为可选。","user"],
+[6,"学习型视觉","Learned vision","ext",[8],"L8.62 一页，从模板匹配过渡到 CNN。","user"],
+[6,"3D 感知与点云","3D sensing and point clouds","named",[10],"只在 L10 的 scan-to-weld 案例里出现。","user"],
+[6,"力 / 触觉感知","Force and tactile sensing","named",[7],"L7 讲力的映射，传感器选型只在教师指南里。","user"],
+[6,"惯性与本体感知","Inertial and proprioception","none",[],"","maker"],
+[6,"SLAM 与定位","SLAM and localisation","none",[],"移动机器人的核心，机械臂课不进入。","user"],
+
+[7,"状态估计与滤波","State estimation and filtering","none",[],"卡尔曼一族，完全不涉及。","both"],
+[7,"强化学习","Reinforcement learning","none",[],"","both"],
+[7,"模仿学习与 VLA","Imitation learning and VLA","ext",[8],"L8 Part 7，明确标注不考。","user"],
+[7,"任务推理与大模型","Task reasoning with foundation models","ext",[8,9],"L8 Part 7 与 L9.22，各一页概念介绍。","user"],
+[7,"人机协作与安全交互","Human–robot collaboration","none",[],"","both"],
+[7,"行为架构与决策","Behaviour architectures","none",[],"","user"],
+[7,"可解释性与验证","Verification and assurance","none",[],"","both"],
+
+[8,"机器人编程语言与结构","Robot programming languages","core",[6],"L6 以 ABB RAPID 为例，模块、例行程序、数据类型。","user"],
+[8,"运动指令与过渡区","Motion instructions and zones","core",[6],"L6.13–25，含 speeddata 与 zonedata。","user"],
+[8,"工具、工件与位形数据","Tool, work-object and configuration data","core",[6],"L6.26–36。","user"],
+[8,"I/O、时序与单元逻辑","I/O and cell sequencing","core",[6],"L6.41，仅基本指令。","user"],
+[8,"离线编程与仿真","Offline programming and simulation","core",[6,10],"L6.5 讲方法，L10 给工业案例。","user"],
+[8,"传感器驱动编程","Sensor-based programming","core",[6,10],"L6.6 与 L10 的 scan-to-weld。","user"],
+[8,"实时中间件与 ROS","Real-time middleware and ROS","ext",[9],"L9.20 列出 OMPL 与 MoveIt 2，一页。","both"],
+[8,"现场总线、PLC 与上位机","Fieldbus, PLC and supervisory","none",[],"机器人之外的那半个自动化系统。","user"],
+[8,"安全系统与标准","Safety systems and standards","none",[],"ISO 10218 / TS 15066、风险评估、防护。","user"],
+[8,"调试、投产与运维","Commissioning and operation","none",[],"只在 L6 讲离线编程时作为背景提到。","user"]
+];
+
+/* ---------------- the subject ---------------- */
+const LEC = [
+ [1,"引论与选型","Introduction",[1,2,5],"把任务、机器人与数据表连起来，给出全课的工程语境。"],
+ [2,"三维表示","3D Representation",[0],"建立整门课的通用语言：位姿、旋转、齐次变换、坐标链。"],
+ [3,"DH 建模","DH Modelling",[2],"从实体机器人得到可计算的正运动学模型。"],
+ [4,"逆运动学","Inverse Kinematics",[2],"反过来求关节坐标，并处理多解、极限与奇异。"],
+ [5,"轨迹规划","Trajectory Planning",[5],"给路径加上时间，并校验全程可行性。"],
+ [6,"工业编程","ABB RAPID",[8],"把前五讲的结果变成控制器能执行的程序。"],
+ [7,"雅可比与柔顺","Jacobian & Compliance",[0,2,4,6],"速度与力的映射，接触任务的控制策略。"],
+ [8,"机器视觉与标定","Vision & Calibration",[6,7],"让机器人用测量结果而不是示教点来定目标。"],
+ [9,"路径规划","Path Planning",[5,7,8],"可选模块：无碰撞路线如何生成与验证。"],
+ [10,"精益自动化","Lean Automation",[6,8],"不引入新技术，把前面的东西放进工业语境。"]
+];
+const LE = [[1,2],[2,3],[3,4],[4,5],[5,6],[2,6],[4,6],[3,7],[4,7],[1,8],[2,8],
+            [4,9],[5,9],[6,10],[8,10]];
+
+/* ---------------- figure 1 ---------------- */
+const CW = 170, CPITCH = 184, CH = 30, RPITCH = 36, MX = 34, TOP = 92;
+const rows = DOM.map((_, i) => LEAF.filter(l => l[0] === i).length);
+const W1 = MX * 2 + (DOM.length - 1) * CPITCH + CW;
+const H1 = TOP + Math.max(...rows) * RPITCH + 16;
+const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+const AUDTXT = {
+  user:["系统集成商","System integrator · 把买来的机器人变成一条能干活的产线"],
+  both:["两者都需要","Shared · 制造商与集成商都要掌握，只是深度不同"],
+  maker:["机器人制造商","Robot manufacturer · 机器本身的设计与内部控制"]
+};
+const STATE = {core:["讲授","b-core"],ext:["扩展","b-ext"],named:["点到","b-named"],
+               pre:["先修","b-pre"],none:["不涉及","b-none"]};
+
+const f1 = document.getElementById("f1");
+f1.setAttribute("viewBox", `0 0 ${W1} ${H1}`);
+let g1 = "", idx = 0;
+DOM.forEach((d, i) => {
+  const x = MX + i * CPITCH, items = LEAF.filter(l => l[0] === i);
+  const nCov = items.filter(l => l[3] === "core" || l[3] === "ext").length;
+  g1 += `<g class="domhdr"><rect x="${x}" y="30" width="${CW}" height="48" rx="3"/>
+    <text class="dt" x="${x+9}" y="47">${esc(d[0])}</text>
+    <text class="de" x="${x+9}" y="61">${esc(d[1])}</text>
+    <text class="dn" x="${x+9}" y="72">${items.length} 项 · 覆盖 ${nCov}</text></g>`;
+});
+LEAF.forEach((l, i) => {
+  const col = l[0];
+  const row = LEAF.slice(0, i).filter(z => z[0] === col).length;
+  const x = MX + col * CPITCH, y = TOP + row * RPITCH;
+  const long = l[1].length > 13;
+  const tag = l[4].length ? l[4].map(n => "L" + n).join(" ") : "";
+  g1 += `<g class="cell s-${l[3]}" data-i="${i}" tabindex="0" role="button"
+      aria-label="${esc(l[1])}，${esc(STATE[l[3]][0])}">
+    <rect x="${x}" y="${y}" width="${CW}" height="${CH}" rx="2.5"/>
+    ${l[6] === "user" ? "" : `<rect class="aud a-${l[6]}" x="${x+2}" y="${
+      l[6] === "maker" ? y + 3 : y + (CH - 12) / 2}" width="5" height="${
+      l[6] === "maker" ? CH - 6 : 12}" rx="1.5"/>`}
+    <text class="lab" x="${x+12}" y="${y+CH/2+1}" font-size="${long ? 9.4 : 10.4}"
+      >${esc(l[1])}</text>
+    ${tag ? `<text class="tag" x="${x+CW-7}" y="${y+8}" text-anchor="end">${tag}</text>` : ""}
+  </g>`;
+});
+f1.innerHTML = g1;
+
+/* ---------------- figure 2 ---------------- */
+const LW = 150, LPITCH = 176, LH = 46, LX = 34, LY = 112;
+const W2 = LX * 2 + 9 * LPITCH + LW, H2 = 200;
+const f2 = document.getElementById("f2");
+f2.setAttribute("viewBox", `0 0 ${W2} ${H2}`);
+const lx = n => LX + (n - 1) * LPITCH;
+
+/* fan the arc endpoints so several edges into one lecture stay separable */
+const inAt = {}, outAt = {};
+LE.forEach(([a, b]) => { if (b - a > 1) { (inAt[b] = inAt[b] || []).push(a);
+                                         (outAt[a] = outAt[a] || []).push(b); } });
+const off = (list, v) => {
+  const k = list.indexOf(v), m = list.length;
+  return (k - (m - 1) / 2) * 15;
+};
+
+let g2 = `<defs><marker id="la" viewBox="0 0 10 10" refX="9" refY="5"
+   markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+   <path d="M0 1.2 L9 5 L0 8.8 z" fill="currentColor"/></marker></defs>`;
+LE.forEach(([a, b], i) => {
+  const s = b - a;
+  if (s === 1) {                       // the spine: a straight hop to the next lecture
+    const x1 = lx(a) + LW + 3, x2 = lx(b) - 3, y = LY + LH / 2;
+    g2 += `<path class="larc spine" id="la${i}" data-a="${a}" data-b="${b}"
+      d="M${x1} ${y} L${x2} ${y}" marker-end="url(#la)" style="color:currentColor"/>`;
+    return;
+  }
+  const xa = lx(a) + LW / 2 + off(outAt[a], b);
+  const xb = lx(b) + LW / 2 + off(inAt[b], a);
+  const h = Math.min(94, 20 + 16 * (s - 1));
+  g2 += `<path class="larc" id="la${i}" data-a="${a}" data-b="${b}"
+    d="M${xa} ${LY} C${xa} ${LY-h} ${xb} ${LY-h} ${xb} ${LY}"
+    marker-end="url(#la)" style="color:currentColor"/>`;
+});
+LEC.forEach(l => {
+  const x = lx(l[0]);
+  g2 += `<g class="lec${l[0] === 9 ? " opt" : ""}" data-n="${l[0]}" tabindex="0" role="button"
+      aria-label="第 ${l[0]} 讲 ${esc(l[1])}">
+    <rect x="${x}" y="${LY}" width="${LW}" height="${LH}" rx="3"/>
+    <text class="ln" x="${x+10}" y="${LY+15}">LECTURE ${String(l[0]).padStart(2,"0")}${
+      l[0] === 9 ? " · 可选" : ""}</text>
+    <text class="lt" x="${x+10}" y="${LY+32}">${esc(l[1])}</text>
+    <g class="fp">${DOM.map((_, d) =>
+      `<rect class="f${l[3].includes(d) ? 1 : 0}" x="${x + 10 + d * 15}" y="${LY+LH+8}"
+        width="11" height="7" rx="1.5"/>`).join("")}</g>
+  </g>`;
+});
+f2.innerHTML = g2;
+
+/* ---------------- counts, legend ---------------- */
+const cnt = {core:0,ext:0,named:0,pre:0,none:0};
+LEAF.forEach(l => cnt[l[3]]++);
+["core","ext","named","none"].forEach(k =>
+  document.getElementById("n-"+k).textContent = cnt[k]);
+document.getElementById("leg1").innerHTML =
+  ["core","ext","named","pre","none"].map(k =>
+    `<span><i class="b ${STATE[k][1]}">${STATE[k][0]}</i> ${cnt[k]} 项</span>`).join("")
+  + `<span style="color:var(--ink-3)">共 ${LEAF.length} 项</span>`;
+
+const AUDNOTE = {
+  user: "系统集成商的问题：假定机器人已经存在且可控，要把它用在一个具体任务上——选型、建模、编程、测量、验证、交付。本课的主体落在这里，缺口集中在抓取规划、安全标准与投产运维。",
+  both: "几何与运动学的数学两边共用，只是深度不同：制造商用它决定机构尺寸与关节布局，集成商用它决定目标位姿与路径。本课覆盖一半，缺的是旋量/李群这套现代表述与冗余解算。",
+  maker: "机器人制造商的问题：动力学、驱动传动、关节伺服、本体传感。这些在出厂时就已经解决并封进控制柜，系统集成商不处理。本课覆盖 0 项，这是刻意的边界，不是遗漏。"
+};
+
+/* audience summary */
+(function () {
+  const order = ["user","both","maker"];
+  const rowsA = order.map(a => {
+    const items = LEAF.filter(l => l[6] === a);
+    return [a, items.length,
+            items.filter(l => l[3] === "core").length,
+            items.filter(l => l[3] === "ext").length];
+  });
+  document.getElementById("audfig").innerHTML = rowsA.map(([a, n, c, e]) => `
+    <div class="audrow">
+      <div class="nm"><i class="audkey ${a === "user" ? "none" : a}"></i>
+        <span style="margin-left:7px">${AUDTXT[a][0]}</span><i>${n} 个方向</i></div>
+      <div class="audbar" role="img"
+        aria-label="${AUDTXT[a][0]}：共 ${n} 项，本课讲授 ${c} 项，扩展 ${e} 项">
+        <i class="bc" style="width:${c / n * 100}%"></i>
+        <i class="be" style="width:${e / n * 100}%"></i></div>
+      <div class="num"><b>${c + e}</b> / ${n} · ${Math.round((c + e) / n * 100)}%</div>
+    </div>`).join("");
+})();
+
+/* ---------------- interaction ---------------- */
+const panel = document.getElementById("panel");
+function clear() {
+  f1.classList.remove("sel"); f2.classList.remove("sel2");
+  f1.querySelectorAll(".cell").forEach(e => e.classList.remove("on"));
+  f2.querySelectorAll(".lec").forEach(e => e.classList.remove("on","rel"));
+  f2.querySelectorAll(".larc").forEach(e => e.classList.remove("hot"));
+  panel.innerHTML = `<p class="hint">点图一的任意一格，看它属于哪个领域、本课讲到什么程度、由哪一讲承担；
+    点图二的任意一讲，图一里属于它的格子会亮起来。</p>`;
+}
+function showLeaf(i) {
+  const l = LEAF[i], [st, cls] = STATE[l[3]];
+  clear();
+  f1.classList.add("sel");
+  f1.querySelector(`.cell[data-i="${i}"]`).classList.add("on");
+  if (l[4].length) {
+    f2.classList.add("sel2");
+    l[4].forEach(n => f2.querySelector(`.lec[data-n="${n}"]`).classList.add("on"));
+  }
+  panel.innerHTML = `<div class="hd"><span class="zh">${esc(l[1])}</span>
+      <span class="en">${esc(l[2])}</span><span class="b ${cls}">${st}</span></div>
+    <div class="meta2"><span><b>所属领域</b>${esc(DOM[l[0]][0])}</span>
+      <span><b>承担讲次</b>${l[4].length ? l[4].map(n => "第 " + n + " 讲").join(" · ") : "—"}</span>
+      <span><b>谁需要它</b>${AUDTXT[l[6]][0]}</span></div>
+    ${l[5] ? `<p>${esc(l[5])}</p>` : ""}`;
+}
+function showLec(n) {
+  const l = LEC.find(x => x[0] === n);
+  clear();
+  f2.classList.add("sel2");
+  f2.querySelector(`.lec[data-n="${n}"]`).classList.add("on");
+  const pre = LE.filter(e => e[1] === n).map(e => e[0]);
+  const post = LE.filter(e => e[0] === n).map(e => e[1]);
+  [...pre, ...post].forEach(m =>
+    f2.querySelector(`.lec[data-n="${m}"]`).classList.add("rel"));
+  f2.querySelectorAll(".larc").forEach(e => {
+    if (+e.dataset.a === n || +e.dataset.b === n) e.classList.add("hot");
+  });
+  f1.classList.add("sel");
+  const mine = [];
+  LEAF.forEach((lf, i) => {
+    if (lf[4].includes(n)) { mine.push(i); f1.querySelector(`.cell[data-i="${i}"]`).classList.add("on"); }
+  });
+  panel.innerHTML = `<div class="hd"><span class="zh">第 ${n} 讲 · ${esc(l[1])}</span>
+      <span class="en">${esc(l[2])}</span>${n === 9 ? '<span class="b b-ext">可选模块</span>' : ""}</div>
+    <p>${esc(l[4])}</p>
+    <div class="meta2">
+      <span><b>前置</b>${pre.length ? pre.map(p => "L" + p).join(" · ") : "—"}</span>
+      <span><b>支撑</b>${post.length ? post.map(p => "L" + p).join(" · ") : "—"}</span>
+      <span><b>覆盖领域</b>${l[3].map(d => DOM[d][0]).join(" · ")}</span></div>
+    <p>${mine.map(i => `<button class="chip" data-leaf="${i}">${esc(LEAF[i][1])}</button>`).join("")}</p>`;
+}
+f1.addEventListener("click", e => {
+  const c = e.target.closest(".cell"); c ? showLeaf(+c.dataset.i) : clear();
+});
+f2.addEventListener("click", e => {
+  const c = e.target.closest(".lec"); c ? showLec(+c.dataset.n) : clear();
+});
+[f1, f2].forEach(f => f.addEventListener("keydown", e => {
+  const c = e.target.closest(".cell,.lec");
+  if (c && (e.key === "Enter" || e.key === " ")) {
+    e.preventDefault();
+    c.classList.contains("cell") ? showLeaf(+c.dataset.i) : showLec(+c.dataset.n);
+  }
+}));
+panel.addEventListener("click", e => {
+  const b = e.target.closest("[data-leaf]"); if (b) showLeaf(+b.dataset.leaf);
+});
+
+const T = [["clear","清除选择"],["none","只看本课不涉及的"],["core","只看本课讲授的"],
+           ["a-user","只看系统集成商需要的"],["a-both","两者都需要的"],
+           ["a-maker","只看机器人制造商需要的"]];
+document.getElementById("tools1").innerHTML =
+  T.map(t => `<button type="button" data-t="${t[0]}">${t[1]}</button>`).join("");
+document.getElementById("tools1").addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  const t = b.dataset.t;
+  if (t === "clear") return clear();
+  clear(); f1.classList.add("sel");
+  const aud = t.startsWith("a-") ? t.slice(2) : null;
+  const want = t === "none" ? ["none"] : ["core"];
+  let k = 0, cov = 0;
+  LEAF.forEach((l, i) => {
+    const hit = aud ? l[6] === aud : want.includes(l[3]);
+    if (hit) {
+      k++; if (l[3] === "core" || l[3] === "ext") cov++;
+      f1.querySelector(`.cell[data-i="${i}"]`).classList.add("on");
+    }
+  });
+  if (aud) {
+    const A = AUDTXT[aud];
+    panel.innerHTML = `<div class="hd"><span class="zh">${A[0]}</span>
+        <span class="en">${A[1]}</span></div>
+      <div class="meta2"><span><b>方向数</b>${k} 项</span>
+        <span><b>本课覆盖</b>${cov} 项 · ${Math.round(cov / k * 100)}%</span></div>
+      <p>${AUDNOTE[aud]}</p>`;
+    return;
+  }
+  panel.innerHTML = `<div class="hd"><span class="zh">${
+      t === "none" ? "本课不涉及的 " + k + " 个方向" : "本课核心讲授的 " + k + " 个方向"}</span></div>
+    <p>${t === "none"
+      ? "动力学整列、控制列的五格、自主与学习列的五格，加上机构硬件列的五格——这些合起来就是「把一台机械臂做出来并让它稳定运行」所需要的那一半知识。本课站在另一半：假定机器人已经存在且可控，研究如何描述它、求解它、规划它、测量它并对它编程。"
+      : "二十四格集中在三处：几何与运动学（L2–L4、L7）、感知与标定（L8）、工业实现（L6）。这正是系统集成商而不是机器人制造商所需要的核心。"}</p>`;
+});
+clear();
+</script>
+</body>
+</html>

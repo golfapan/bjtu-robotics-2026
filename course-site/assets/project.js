@@ -42,10 +42,7 @@
       }
     ],
     "review": "Four engineering stages → EOI, PDR, FDR → final report and demonstration",
-    "source": [
-      12,
-      40
-    ],
+    "source": [12, 47],
     "specSection": "§§1–3 · brief and constraints"
   },
   {
@@ -68,8 +65,8 @@
       "Which dimensions, masses, contact points and clearances are assumptions? State and justify them."
     ],
     "fixed": [
-      "Panel rack X: −750, −370 mm · Y = 0",
-      "Spacer table: (500, 0); wheel table: (500, 550) mm",
+      "A1/A2 panel centres: X = −750, −370; Y = 0; Z = 300 mm",
+      "B/C table centres: (500, 0), (500, 550) mm; surfaces Z = 50 mm",
       "Assembly frame: (−800, 650, 300) mm · yaw 90°",
       "Wheel insertion follows the motor-shaft axis; tool changes are optional."
     ],
@@ -89,11 +86,8 @@
       }
     ],
     "review": "EOI · 5 marks · end of Class 2 / after Lecture 2",
-    "source": [
-      45,
-      50
-    ],
-    "specSection": "§§3.1–3.2, 4.1 · concept and task definition"
+    "source": [52, 57],
+    "specSection": "§§3.1–3.3, 4.1 · concept and task definition"
   },
   {
     "tab": "Stage 2 · DH",
@@ -129,10 +123,7 @@
       }
     ],
     "review": "PDR · 10 marks · end of Class 3 / after Lecture 3",
-    "source": [
-      51,
-      56
-    ],
+    "source": [58, 63],
     "specSection": "§4.2 · kinematic modelling"
   },
   {
@@ -166,10 +157,7 @@
     ],
     "demos": [],
     "review": "FDR · 10 marks · end of Class 5 / after Lecture 5",
-    "source": [
-      57,
-      64
-    ],
+    "source": [64, 71],
     "workflow": true,
     "specSection": "§4.3 · validation and motion feasibility"
   },
@@ -211,10 +199,7 @@
       
     ],
     "review": "Stage 4 → Final Engineering Report 35 + Presentation/Demonstration 40",
-    "source": [
-      65,
-      72
-    ],
+    "source": [72, 79],
     "workflow": true,
     "specSection": "§4.4 · programming and integration"
   },
@@ -238,10 +223,7 @@
     ],
     "demos": [],
     "review": "Choose one · Vision/calibration OR Force/compliance OR Collision-free planning",
-    "source": [
-      76,
-      99
-    ],
+    "source": [82, 106],
     "specSection": "§5 · choose one challenge"
   },
   {
@@ -278,10 +260,7 @@
       }
     ],
     "review": "Engineering evidence, reproducible results and professional communication",
-    "source": [
-      100,
-      152
-    ],
+    "source": [107, 154],
     "specSection": "§§6–9 · tools, deliverables and assessment"
   }
 ];
@@ -368,7 +347,7 @@
   const workflowNames=['Home','Pick approach','Pick and grip','Pick retreat','Assembly approach','Assemble and release','Assembly retreat','Home'];
   const stop=()=>{if(timer!==null)clearInterval(timer);timer=null;};
   function effective(){return stage===5?{...stages[5],...challenges[choice],title:'Choose one advanced challenge',decision:challenges[choice].title}:stages[stage];}
-  function render(){stop();const s=effective();$('brief-admin').hidden=stage!==0;$('phase').textContent=s.phase;$('stage-title').textContent=s.title;$('visual-title').textContent=s.visual;$('project-image').src=s.image;$('project-image').alt=s.caption;$('figure-caption').textContent=s.caption;$('decision').textContent=s.decision;$('tasks').innerHTML=s.tasks.map(t=>`<li>${escape(t)}</li>`).join('');$('fixed-data').innerHTML=s.fixed.map(t=>`<p>${escape(t)}</p>`).join('');$('whatif').textContent=s.whatif;$('review').textContent=`Step ${stage+1} / ${stages.length}`;$('evidence').innerHTML='<ul>'+s.evidence.map(t=>`<li>${escape(t)}</li>`).join('')+'</ul>';$('evidence').hidden=false;$('evidence-toggle').hidden=true;$('stage-source').textContent='Project Specification '+s.specSection;document.querySelector('.whatif').open=false;$('lesson-links').innerHTML=s.lessons.map(n=>`<button class="lesson-link" data-lesson="${n}"><span>L${n}</span><b>${escape(lessons[n].title)}</b></button>`).join('');$('demo-links').innerHTML=s.demos.map(d=>`<a class="demo-link" href="${d.href}" target="_blank" rel="noopener">${escape(d.label)} ↗</a>`).join('');$('visual-extra').replaceChildren();
+  function render(){stop();const s=effective();$('brief-admin').hidden=stage!==0;$('phase').textContent=s.phase;$('stage-title').textContent=s.title;$('visual-title').textContent=s.visual;$('project-image').src=s.image;$('project-image').alt=s.caption;$('figure-caption').textContent=s.caption;$('decision').textContent=s.decision;$('tasks').innerHTML=s.tasks.map(t=>`<li>${escape(t)}</li>`).join('');$('fixed-data').innerHTML=s.fixed.map(t=>`<p>${escape(t)}</p>`).join('');$('workcell-reference').hidden=stage!==1;if(stage===1)$('workcell-reference').innerHTML=`<details class="workcell-data"><summary>Workcell dimensions · Tables 1 and 2</summary>${source.workcellHtml}</details>`;$('whatif').textContent=s.whatif;$('review').textContent=`Step ${stage+1} / ${stages.length}`;$('evidence').innerHTML='<ul>'+s.evidence.map(t=>`<li>${escape(t)}</li>`).join('')+'</ul>';$('evidence').hidden=false;$('evidence-toggle').hidden=true;$('stage-source').textContent='Project Specification '+s.specSection;document.querySelector('.whatif').open=false;$('lesson-links').innerHTML=s.lessons.map(n=>`<button class="lesson-link" data-lesson="${n}"><span>L${n}</span><b>${escape(lessons[n].title)}</b></button>`).join('');$('demo-links').innerHTML=s.demos.map(d=>`<a class="demo-link" href="${d.href}" target="_blank" rel="noopener">${escape(d.label)} ↗</a>`).join('');$('visual-extra').replaceChildren();
     document.body.classList.toggle('project-brief',stage===0);$('brief-reach-panel').hidden=stage!==0;
     $('demonstrations').open=false;$('demonstrations').hidden=stage!==0&&!s.workflow&&!s.demos.length;
     $('brief-resources').hidden=false;
@@ -385,7 +364,7 @@
   function openLesson(n){const l=lessons[n];$('lesson-dialog').classList.toggle('frame-lesson',!!l.interactive);$('lesson-number').textContent=`LECTURE ${n} · SINGLE-PAGE CLASSROOM NOTE`;$('lesson-title').textContent=l.title;$('lesson-body').innerHTML=`<p class="lesson-lead">${escape(l.idea)}</p>${l.math?`<div class="formula">${l.math}</div>`:''}<div class="lesson-grid"><div><h3>Use it in the project</h3><ul>${l.points.map(p=>`<li>${escape(p)}</li>`).join('')}</ul></div><div class="knowledge-box ${l.interactive?'':'green'}">${l.interactive?'<div id="frame-lab"></div>':`<h3>Check the meaning</h3><p>${escape(l.example)}</p>${l.code?`<pre>${escape(l.code)}</pre>`:''}`}</div></div><div class="lesson-footer"><a href="quiz.html" target="_blank" rel="noopener">Open interactive Quiz ↗</a><a href="${ppt(n)}" target="_blank" rel="noopener">Full Lecture ${n} PDF ↗</a><span>Classroom summary; original slides retain the full content.</span></div>`;if(l.interactive){const equation=$('lesson-body').querySelector(':scope > .formula'),grid=$('lesson-body').querySelector('.lesson-grid');grid.classList.add('frame-lesson-grid');grid.firstElementChild.append(equation);frameLab();}$('lesson-dialog').showModal();}
   const fmt=n=>Math.abs(n)<1e-7?'0':Number(n.toFixed(2)).toString();
   function frameLab(){const R=M.rpy(0,0,90),p=[-800,650,300],A=M.pose(R,p);$('frame-lab').innerHTML='<h3>Fixed assembly frame → local point</h3><div class="frame-matrix-wrap"><div class="matrix-row"><span class="matrix-label"><sup>W</sup>T<sub>A</sub> =</span><span class="matrix">'+A.flat().map(v=>`<span>${fmt(v)}</span>`).join('')+'</span></div><p class="caption">Translation in mm; supplied assembly yaw = 90°. The robot base is not assumed to be the world frame.</p></div><div class="frame-offsets">'+['x','y','z'].map((k,i)=>`<div class="offset-control"><label for="point-${k}">${k}<sub>A</sub> (mm)</label><input id="point-number-${k}" aria-label="Local point ${k} numeric value" type="number" min="${i===2?0:-100}" max="100" step="10" value="${i===0?50:0}"><input id="point-${k}" aria-label="Local point ${k}" type="range" min="${i===2?0:-100}" max="100" step="10" value="${i===0?50:0}"></div>`).join('')+'</div><div id="point-result" aria-live="polite"></div><p class="caption">Illustrative local point, not a supplied grasp or TCP target. Assembly frame and all fixed brief data stay unchanged.</p>';$('frame-lab').querySelector('.matrix-label').remove();$('frame-lab').querySelector('h3').innerHTML='Assembly frame <sup>W</sup>T<sub>A</sub> · local point experiment';const vals=[50,0,0];function update(){const w=M.add(p,M.mul(R,vals));$('point-result').innerHTML=`p<sub>W</sub> = R p<sub>A</sub> + t<br><b>(${w.map(fmt).join(', ')}) mm</b>`;}['x','y','z'].forEach((k,i)=>{const number=$('point-number-'+k),slider=$('point-'+k);for(const input of[number,slider])input.oninput=()=>{if(input.value===''||!Number.isFinite(input.valueAsNumber))return;vals[i]=Math.max(i===2?0:-100,Math.min(100,input.valueAsNumber));if(input===slider)number.value=vals[i];slider.value=vals[i];update();};number.onchange=()=>number.value=vals[i];});update();}
-  function specification(full){$('spec-title').textContent=full?'Full Project Specification':`${stages[stage].tab} · Original requirements`;$('source-info').innerHTML=`Source: <a href="../Project%20Materials/BJTU%20Robotics%20and%20Flexible%20Automation%20Project%20Specification.pdf" target="_blank" rel="noopener">Project Specification (PDF)</a>`;if(full)$('spec-body').innerHTML=source.documentHtml;else{const [a,b]=stages[stage].source;$('spec-body').innerHTML=Object.entries(source.paragraphs).filter(([i,t])=>t&&((Number(i)>=a&&Number(i)<=b)||(stage===1&&Number(i)>=25&&Number(i)<=38))).map(([,t])=>`<p>${escape(t)}</p>`).join('');}$('spec-dialog').showModal();}
+  function specification(full){$('spec-title').textContent=full?'Full Project Specification':`${stages[stage].tab} · Original requirements`;$('source-info').innerHTML=`Source: <a href="../Project%20Materials/BJTU%20Robotics%20and%20Flexible%20Automation%20Project%20Specification.pdf" target="_blank" rel="noopener">Project Specification (PDF)</a>`;if(full)$('spec-body').innerHTML=source.documentHtml;else{$('spec-body').innerHTML=source.stageHtml[stage];}$('spec-dialog').showModal();}
   stages.forEach((s,i)=>{const b=document.createElement('button');b.textContent=s.tab;b.onclick=()=>change(i);$('stages').append(b);});
   document.addEventListener('click',e=>{const close=e.target.closest('[data-close]');if(close)$(close.dataset.close).close();const learn=e.target.closest('[data-lesson]');if(learn)openLesson(Number(learn.dataset.lesson));const option=e.target.closest('[data-challenge]');if(option){choice=option.dataset.challenge;render();}const flow=e.target.closest('[data-flow]');if(flow){stop();workflowStep=Number(flow.dataset.flow);updateFlow();$('workflow-play').textContent='Play sequence';}});
   $('evidence-toggle').onclick=()=>{const open=$('evidence').hidden;$('evidence').hidden=!open;$('evidence-toggle').setAttribute('aria-expanded',String(open));$('evidence-toggle').textContent=open?'Hide evidence requirements':'What evidence is needed?';};
