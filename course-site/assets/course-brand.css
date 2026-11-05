@@ -1,0 +1,8 @@
+/* Personal identity: the user's approved welding-robot logo, full image retained. */
+.personal-brand-host{align-items:center!important}
+.personal-course-brand{display:inline-flex!important;align-items:center;justify-content:center;flex:0 0 48px;width:48px;height:48px;min-width:48px;min-height:48px;padding:0!important;margin-left:10px;border:1px solid #b3c6d2;border-radius:9px;overflow:hidden;background:#fff;line-height:0;text-decoration:none!important;align-self:center}
+.personal-course-brand img,.brand-mark.personal-brand-mark img{display:block;width:100%;height:100%;max-width:none;object-fit:contain;background:#fff}
+.brand-mark.personal-brand-mark{display:block!important;width:56px!important;height:56px!important;min-width:56px;flex:0 0 56px;padding:0!important;border-radius:10px;background:#fff!important;border:1px solid #b3c6d2;overflow:hidden}
+.personal-course-brand:focus-visible{outline:3px solid #e3a933;outline-offset:4px}
+@media(max-width:650px){.brand-mark.personal-brand-mark{width:48px!important;height:48px!important;min-width:48px;flex-basis:48px}.personal-brand-host:not(.personal-brand-home){position:relative;padding-right:70px!important;flex-wrap:wrap;gap:8px 12px!important;min-height:64px}.personal-brand-host:not(.personal-brand-home)>.personal-course-brand{position:absolute;right:10px;top:8px;width:44px;height:44px;min-width:44px;min-height:44px;margin:0}.personal-brand-host:not(.personal-brand-home)>div:last-of-type{flex-wrap:wrap}.personal-course-brand{width:44px;height:44px;min-width:44px;min-height:44px}}
+@media print{.personal-course-brand,.brand-mark.personal-brand-mark{break-inside:avoid;box-shadow:none}}
